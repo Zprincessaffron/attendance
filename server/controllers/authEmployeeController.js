@@ -7,7 +7,7 @@ import sendEmail from '../utils/sendEmail.js'
 
 // Register a new employee
 export const registerAuthEmployee = async (req, res) => {
-    const { employeeId, name, email, password, role, department } = req.body;
+    const { employeeId, name, email, password, role, department,accessCode } = req.body;
   
     try {
       // Check if the employee ID or email already exists
@@ -25,7 +25,8 @@ export const registerAuthEmployee = async (req, res) => {
         email,
         password: hashedPassword,
         role,
-        department
+        department,
+        accessCode
       });
   
       // Save to the database
@@ -59,7 +60,7 @@ export const loginAuthEmployee = async (req, res) => {
   
       // Generate JWT token if passwords match
       const token = jwt.sign(
-        { employeeId: employee.employeeId, role: employee.role, department: employee.department,name:employee.name },
+        { employeeId: employee.employeeId, role: employee.role, department: employee.department,name:employee.name,accessCode:employee.accessCode },
         'Hello',    );
   
       // Respond with token

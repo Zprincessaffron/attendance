@@ -1,5 +1,5 @@
 import express from 'express';
-import { createEmployee, getAllEmployees, getEmployeeById, updateLeavesTaken } from '../controllers/employeeController.js';
+import { createEmployee, getAllEmployees, getEmployeeById, updateLeavesTaken, getEmployeeFromDev } from '../controllers/employeeController.js';
 
 const router = express.Router();
 
@@ -10,10 +10,13 @@ router.post('/add', createEmployee);
 router.get('/all', getAllEmployees);
 
 // Get employee by employeeId
-router.get('/:employeeId', getEmployeeById);
+router.get('/filter/:employeeId', getEmployeeById);
 
 // Update leaves taken by employeeId
 router.put('/leaves/:employeeId', updateLeavesTaken);
+//get all employee data of development
+router.get('/fromdev', getEmployeeFromDev);
+
 
 
 export default router;

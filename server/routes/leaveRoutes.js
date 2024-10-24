@@ -6,7 +6,8 @@ import {
   getAllLeaveRequests,
   getAllPendingLeaveRequests,
   getAllApprovedLeaveRequests,
-  getAllRejectedLeaveRequests
+  getAllRejectedLeaveRequests,
+  getLeaveFromDevelopment
 
 } from '../controllers/leaveController.js';
 
@@ -25,7 +26,6 @@ router.get('/approved', getAllApprovedLeaveRequests);
 router.get('/all', getAllLeaveRequests);
 router.get('/pendinng', getAllPendingLeaveRequests);
 router.get('/rejected', getAllRejectedLeaveRequests);
-
-
+router.get('/fromdev', getLeaveFromDevelopment);
 
 export default router;

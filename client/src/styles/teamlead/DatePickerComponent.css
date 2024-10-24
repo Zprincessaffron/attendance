@@ -1,0 +1,94 @@
+/* DatePickerStyles.css */
+
+/* Container for the date picker */
+.datepicker-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Input field styling */
+.custom-date-input {
+  width: 220px;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #00aaff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  margin-right: 10px; /* Space between input and button */
+}
+
+/* Hover and focus effects for input */
+.custom-date-input:hover {
+  border-color: #0080cc;
+}
+
+.custom-date-input:focus {
+  border-color: #006699;
+  box-shadow: 0 0 8px rgba(0, 153, 204, 0.6);
+}
+
+/* Styling for the search button */
+.search-button {
+  padding: 12px 16px;
+  font-size: 16px;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover effect for the search button */
+.search-button:hover {
+  background-color: #0056b3;
+}
+
+/* Calendar container */
+.react-datepicker-popper {
+  z-index: 1000;
+}
+
+/* Calendar header */
+.react-datepicker__header {
+  background-color: #f0f4f8;
+  border-bottom: 1px solid #e0e0e0;
+  padding-top: 10px;
+  border-radius: 8px 8px 0 0;
+}
+
+/* Calendar title styling */
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333333;
+  padding-bottom: 8px;
+}
+
+/* Other styles remain the same... */
+
+/* Calendar popper animation */
+.react-datepicker__month-container {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -9,17 +9,14 @@ const generateEmployeeId = (department) => {
   
     // Convert department to lowercase for case-insensitive matching
     switch (department.toLowerCase()) {
-      case 'developer':
+      case 'development':
         departmentCode = 'D';
         break;
-      case 'analytics':
-        departmentCode = 'A';
+      case 'Sales':
+        departmentCode = 'S';
         break;
       case 'marketing':
         departmentCode = 'M';
-        break;
-      case 'teleperformance':
-        departmentCode = 'T';
         break;
       default:
         throw new Error('Invalid department'); // Error if the department is not valid
@@ -111,3 +108,21 @@ export const updateLeavesTaken = async (req, res) => {
     res.status(500).json({ message: 'Error updating leaves', error });
   }
 };
+
+//get employee details from development
+export const getEmployeeFromDev = async (req, res) => {
+  try {
+      // Regex to match the third letter being 'D'
+      const employees = await Employee.find({ employeeId: /^.{2}D/ });
+
+      // If no employees found, return a message
+      if (employees.length === 0) {
+          return res.status(404).json({ message: 'No employees found with third letter "D" in employeeId' });
+      }
+
+      // Return the filtered employee data
+      res.status(200).json(employees);
+  } catch (error) {
+      res.status(500).json({ message: 'Error fetching employees', error });
+  }
+}

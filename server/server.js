@@ -7,7 +7,8 @@ import employeeRoutes from './routes/employeeRoutes.js';
 import attendanceRoutes from './routes/attendanceRoutes.js';
 import leaveRoutes from './routes/leaveRoutes.js'
 import authEmployeeRoutes from './routes/authEmployeeRoutes.js'
-
+import projectRoutes from './routes/projectRoutes.js'
+import emailRoutes from './routes/emailRoutes.js'
 
 
 
@@ -28,10 +29,13 @@ mongoose.connect(process.env.MONGO_URL, {
   .catch(err => console.log(err));
 
 // Use routes
-app.use('/employees', employeeRoutes);
+app.use('/employee', employeeRoutes);
 app.use('/attendance', attendanceRoutes);
 app.use('/leave', leaveRoutes);
 app.use('/auth', authEmployeeRoutes)
+app.use('/project', projectRoutes);
+app.use('/email', emailRoutes);
+
 
 
 // Use routes

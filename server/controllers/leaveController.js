@@ -1,22 +1,40 @@
 import { Leave } from '../models/Leave.js';
+import moment from 'moment-timezone';
 
 // Create a new leave request
 export const createLeaveRequest = async (req, res) => {
-    try {
-      const { employeeId, leaveReason } = req.body;
-  
-      const newLeaveRequest = new Leave({
-        employeeId,
-        leaveReason,
-        leaveStatus: 'Pending', // Ensure leave status is set to 'Pending' by default
-      });
-  
-      const savedLeaveRequest = await newLeaveRequest.save();
-      res.status(201).json({ message: 'Leave request created successfully', data: savedLeaveRequest });
-    } catch (error) {
-      res.status(500).json({ message: 'Error creating leave request', error });
+  try {
+    const { employeeId, leaveReason, fromDate, toDate } = req.body;
+
+    // Validate that 'fromDate' is not later than 'toDate'
+    if (new Date(fromDate) > new Date(toDate)) {
+      return res.status(400).json({ message: "'fromDate' cannot be later than 'toDate'" });
     }
-  };
+
+    // Format the dates properly using 'Asia/Kolkata' timezone
+    const formattedFromDate = moment(fromDate).tz('Asia/Kolkata').startOf('day').toDate();
+    const formattedToDate = moment(toDate).tz('Asia/Kolkata').endOf('day').toDate();
+
+    // Calculate the number of leave days (inclusive)
+    const numberOfLeaves = moment(formattedToDate).diff(moment(formattedFromDate), 'days') + 1;
+
+    const newLeaveRequest = new Leave({
+      employeeId,
+      leaveReason,
+      fromDate: formattedFromDate,
+      toDate: formattedToDate,
+      numberOfLeaves, // Add the calculated number of leaves
+      leaveStatus: 'Pending',
+    });
+
+    const savedLeaveRequest = await newLeaveRequest.save();
+    res.status(201).json({ message: 'Leave request created successfully', data: savedLeaveRequest });
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating leave request', error });
+  }
+};
+
+
 // Update the leave status (Approve/Reject) based on leave request ID
 export const updateLeaveStatusById = async (req, res) => {
     try {
@@ -110,3 +128,18 @@ export const getAllRejectedLeaveRequests = async (req, res) => {
     }
   };
   
+
+  //get leaves only from "development"
+  
+  export const getLeaveFromDevelopment = async (req, res) => {
+    try {
+        const LeaveFormDevelopment = await Leave.find({employeeId: {
+                $regex: /^.{2}D/,
+            }
+        });
+  
+        res.status(200).json(LeaveFormDevelopment);
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+  }

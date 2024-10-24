@@ -1,0 +1,82 @@
+.e_team_pop_1{
+    background-color: rgb(255, 255, 255);
+    min-width: fit-content ;
+    width: 50vw;
+    height: fit-content;
+    padding: 2rem 2rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.e_team_pop_2{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+.t_team_pop21{
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+.e_team_pop_2>h5{
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+.t_team_pop21>div{
+    width: 100%;
+    display: flex;
+
+}
+.t_team_pop21>div>span{
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+
+}
+.table_member_gender{
+
+}
+.table_member_phone,.table_member_mail{
+    display: flex;
+    align-items: center;
+    gap: 1px;
+
+}
+
+.table_member_phone>span{
+    color: green;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.table_member_mail>span{
+    color: rgb(205, 25, 25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2px;
+    
+}
+.table_member_gender{
+    width: fit-content;
+    padding: 1px 7px;
+    border-radius: 5px;
+}
+.table_member_gender.Male{
+    background-color: rgb(157, 216, 241);
+    color: rgb(46, 88, 206);
+}
+.table_member_gender.Female{
+    background-color: rgb(240, 145, 237);
+    color: rgb(106, 10, 115);
+}

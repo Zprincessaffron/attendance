@@ -1,0 +1,101 @@
+.table_status{
+    width: fit-content;
+    padding: 5px 10px;
+    border-radius: 5px;
+    letter-spacing: 0.5px;
+}
+.table_status.Pending{
+    background-color: rgba(147, 147, 146, 0.336);
+    color: rgb(56, 53, 53);
+
+}
+.table_status.Approved{
+    background-color: rgba(108, 211, 133, 0.336);
+    color: rgb(35, 159, 45);
+
+}
+.table_status.active{
+    background-color: rgba(108, 211, 133, 0.336);
+    color: rgb(35, 159, 45);
+
+}
+.table_status.Rejected{
+    background-color: rgba(237, 40, 40, 0.279);
+    color: rgb(197, 24, 24);
+
+}
+.table_button_view{
+    background: none;
+    border: none;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+.e_leavereq_pop{
+    width: 100%;
+    height: 100vh;
+    background:none;
+    position: fixed;
+    background-color: #00000034;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+.e_leavereq_pop_1{
+    width: 100%;
+    width: 50%;
+    height: 50%;
+    background-color: rgba(255, 255, 255, 0.951);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    border-radius: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+.e_leavereq_pop_2{
+    width: 100%;
+    text-align: center;
+}
+.e_leavereq_pop_2>p{
+    width: 90%;
+    text-align: left;
+    font-weight: 300;
+
+}
+.e_leavereq_pop_2>h5{
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+.e_leavereq_pop_3{
+    gap: 3rem;
+    display: flex;
+    flex-direction: row;
+}
+.e_leavereq_pop_3>button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 35px;
+    border: none;
+    border-radius: 20px;
+}
+.e_leavereq_pop_31{
+    background-color: rgba(157, 221, 157, 0.83);
+}
+.e_leavereq_pop_32{
+    background-color: rgba(255, 0, 0, 0.408);
+    cursor: pointer;
+}
+.e_leavereq_pop_33{
+    background-color: rgba(75, 75, 75, 0.408);
+    cursor: pointer;
+}

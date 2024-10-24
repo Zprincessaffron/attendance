@@ -1,28 +1,32 @@
 import { Attendance } from "../models/Attendance.js";
 // Employee Check-in
+import moment from 'moment-timezone';
 export const checkIn = async (req, res) => {
   try {
     const { employeeId } = req.body;
 
-    // Get the current date (midnight) to compare only the date part
-    const todayDate = new Date();
-    todayDate.setHours(0, 0, 0, 0); // Set to midnight to remove time part
+    // Get today's date at midnight in IST (Asia/Kolkata)
+    const todayDate = moment().tz('Asia/Kolkata').startOf('day').toDate();
 
     // Check if the employee has already checked in today
     const existingAttendance = await Attendance.findOne({
       employeeId,
-      date: todayDate // Compare with the date part only
+      date: {
+        $gte: todayDate,  // Match any attendance from today
+        $lt: moment(todayDate).add(1, 'days').toDate() // Less than the next day's midnight
+      }
     });
 
     if (existingAttendance) {
       return res.status(400).json({ message: 'You have already checked in today.' });
     }
 
-    // Create new attendance record with check-in time and today's date
+    // Create new attendance record with the IST check-in time
+    const checkInTime = moment().tz('Asia/Kolkata').toDate(); 
     const newAttendance = new Attendance({
       employeeId,
-      checkInTime: new Date(), // Store the current time as check-in time
-      date: todayDate // Store the current date
+      date: todayDate,
+      checkInTime
     });
 
     const savedAttendance = await newAttendance.save();
@@ -31,19 +35,18 @@ export const checkIn = async (req, res) => {
     res.status(500).json({ message: 'Error during check-in', error });
   }
 };
-
 // Employee Check-out
 export const checkOut = async (req, res) => {
   try {
     const { employeeId, workDetails } = req.body;
 
+    // Get today's date in IST at midnight
+    const todayDate = moment().tz('Asia/Kolkata').startOf('day').toDate(); // Get the start of the day in IST
+
     // Find today's attendance record
     const todayAttendance = await Attendance.findOne({
       employeeId,
-      date: {
-        $gte: new Date(new Date().setHours(0, 0, 0, 0)), // Start of today
-        $lt: new Date(new Date().setHours(24, 0, 0, 0)) // End of today
-      }
+      date: todayDate // Compare using the correct IST date (start of the day)
     });
 
     if (!todayAttendance) {
@@ -55,21 +58,25 @@ export const checkOut = async (req, res) => {
       return res.status(400).json({ message: 'You have already checked out today.' });
     }
 
-    // Set check-out time and calculate total hours worked
-    const checkOutTime = new Date();
-    const totalHours = (checkOutTime - todayAttendance.checkInTime) / (1000 * 60 * 60); // Time difference in hours
+    // Set check-out time (current time in IST)
+    const checkOutTime = moment().tz('Asia/Kolkata').toDate(); 
+    
 
+    // Calculate total hours worked (using IST times)
+    const totalHours = (checkOutTime - todayAttendance.checkInTime) / (1000 * 60 * 60); // Convert ms to hours
+
+    // Update the attendance record with check-out time, work details, and total hours worked
     todayAttendance.checkOutTime = checkOutTime;
     todayAttendance.workDetails = workDetails;
     todayAttendance.totalHoursWorked = totalHours;
 
+    // Save the updated attendance record
     const updatedAttendance = await todayAttendance.save();
     res.status(200).json(updatedAttendance);
   } catch (error) {
     res.status(500).json({ message: 'Error during check-out', error });
   }
 };
-
 
 export const getAllAttendanceRecordsByEmployeeId = async (req, res) => {
   try {
@@ -117,3 +124,27 @@ export const getAttendanceByDate = async (req, res) => {
     res.status(500).json({ message: 'Error fetching attendance records for the date', error });
   }
 };
+
+
+export const getTodayAttendanceForDevelopment = async (req, res) => {
+  try {
+      const today = new Date();
+      const startOfDay = new Date(today.setHours(0, 0, 0, 0));
+      const endOfDay = new Date(today.setHours(23, 59, 59, 999));
+
+      const attendances = await Attendance.find({
+          date: {
+              $gte: startOfDay,
+              $lte: endOfDay
+          },
+          employeeId: {
+              $regex: /^.{2}D/, // Matches employeeId with 'D' as the third character
+          }
+      });
+
+      res.status(200).json(attendances);
+  } catch (error) {
+      res.status(500).json({ message: error.message });
+  }
+}
+
