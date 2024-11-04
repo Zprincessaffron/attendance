@@ -1,11 +1,11 @@
 .das_con_sidebar_main{
-    padding: 0 20px;
+    padding: 0 0;
     padding-top: 10vh;
    
 }
 .das_con_sidebar_main>div{
     margin-top: 25px;
-    padding: 12px 5px;
+    padding: 12px 20px;
 }
 .das_con_sidebar_1 {
     display: flex;
@@ -22,15 +22,29 @@
     cursor: pointer;
 }
 .das_con_sidebar_1.true{
-    background-color: rgba(81, 79, 184, 0.351);
+    background-color: rgb(5, 30, 35);
+    color: rgb(255, 255, 255);
+    font-weight: 400;
+    letter-spacing: 0.5px;
+   
+   
 
 }
 .tdash_link{
-    color: rgb(92, 90, 90);
+    color: rgb(0, 0, 0);
     
 }
+.das_con_sidebar_1.true .tdash_link{
+    background-color: rgb(5, 30, 35);
+    color: rgb(255, 255, 255);
+    font-weight: 400;
+    letter-spacing: 0.5px;
+   
+
+}
+
 .tdash_link:visited,.tdash_link:active{
-    color: rgb(92, 90, 90);
+    color: rgb(0, 0, 0);
 
 }
 

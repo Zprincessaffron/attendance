@@ -6,13 +6,16 @@ import moment from 'moment';
 import { FaTicket } from "react-icons/fa6";
 import '../../styles/teamlead/THome.css'
 import { RiProjectorLine } from "react-icons/ri";
-import { IoPerson } from "react-icons/io5";
+import { IoPerson } from "react-icons/io5"; 
 import Loader from '../loader/Loader';
+import ShiningText from '../text/ShiningText';
+import ProgressBar from '../bar/ProgressBar';
 
 
 function EHome() {
-  const { loading,setLoading,projects, setProjects, employeeData, teamMembers, setTeamMembers, teamMembersData, setTeamMembersData } = useContext(EmployeeContext)
+  const { allEmployeesData, setAllEmployeesData,loading,setLoading,projects, setProjects, employeeData, teamMembers, setTeamMembers, teamMembersData, setTeamMembersData } = useContext(EmployeeContext)
   const [ getData , setGetData]=useState(false)
+  const [activeProject,setActiveProject]=useState([])
   
 
   async function getProjects() {
@@ -57,9 +60,11 @@ function EHome() {
         console.log("projects",project)
         const activeProjects = project.filter(project => project.status === 'active');
         console.log("active projects",activeProjects)
+
   
         // Check if there are any active projects
         if (activeProjects.length > 0) {
+          setActiveProject(activeProjects)
           const teamMembersList = activeProjects[0].teamMembers;
           setTeamMembers(teamMembersList);
           console.log("Team members:", teamMembersList);
@@ -116,12 +121,25 @@ function EHome() {
       }
     }
   }
+
+  async function getAllemployeesData(){
+    try {
+      const response = await axios.get(`/employee/all`);
+      setAllEmployeesData(response.data);
+    } catch (error) {
+      console.error("Error:", error);
+     
+    }
+
+  }
   
   // useEffect to initiate the process
   useEffect(() => {
     setTimeout(() => {
       if(loading == true){
         getProjects();
+        getAllemployeesData()
+        
       }
     }, 2000);
   }, [getData]);
@@ -131,10 +149,8 @@ function EHome() {
     <div>
       <div className='outlet_title'>
         <div>
-          Home
+         <ShiningText text="Home"/>
         </div>
-
-
       </div>
       {loading?
       (
@@ -226,20 +242,25 @@ function EHome() {
                   </tr>
                 </thead>
                 <tbody>
-                  {projects.map((project) => (
+                  {activeProject.map((project) => (
                     <tr key={project.id}>
                       <td>{project.projectName}</td>
                       <td>{project.startDate.split("T")[0]}</td>
                       <td>{project.endDate ? project.endDate.split("T")[0] : "-"}</td>
                       <td>
-                        <div className="progress-bar-container">
+                        {/* <div className="progress-bar-container">
                           <div
                             className="progress-bar"
                             style={{ width: `${project.progress}%` }}
-                          ></div>
-                        </div>
+                          >
+                            
+                          </div>
+                        </div> */}
+                        <ProgressBar value={project.progress}/>
+
+                        
                       </td>
-                      <td>{project.status}</td>
+                      <td><p className={`table_status ${project.status}`}>{project.status}</p></td>
                     </tr>
                   ))}
                 </tbody>

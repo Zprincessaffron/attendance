@@ -2,6 +2,7 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import moment from 'moment-timezone';
+import ShiningText from "../text/ShiningText";
 
 const EmailDetail = () => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const EmailDetail = () => {
 
       <div className='outlet_title'>
         <div>
-          Inbox
+        <ShiningText text='Inbox'/>
         </div>
 
 
@@ -34,7 +35,7 @@ const EmailDetail = () => {
       <div className="detail-info">
         <div className="sender-info">
          <div>
-         <strong>{senderName}</strong> 
+         <h2>{senderName}</h2>
          <p>{senderId}</p>
          </div>
          {tags && <span className={`email-label ${tags.toLowerCase()}`}>{tags}</span>}

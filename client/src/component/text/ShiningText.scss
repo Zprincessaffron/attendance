@@ -1,0 +1,28 @@
+h1 {
+    color: hsl(0, 0%, 28%);
+    font-size: 22px!important;
+    font-weight: bold!important;
+    font-family: monospace;
+    letter-spacing: 3px!important;
+    cursor: pointer;
+    text-transform: uppercase;
+    padding: 20px;
+    
+    background: linear-gradient(to right, hsl(0, 0%, 30%) 0, hsl(0, 0%, 100%) 10%, hsl(0, 0%, 30%) 20%);
+
+    background-size: 200% auto; // Increased the background size to create a smooth transition
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  
+    animation: shine 8s infinite linear;
+  }
+  
+  @keyframes shine {
+    0% {
+      background-position: 200% center; // Start outside to the right
+    }
+    100% {
+      background-position: -200% center; // Move continuously to the left
+    }
+  }
+  

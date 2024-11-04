@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { EmployeeContext } from "../../context/EmployeeContext";
 import axios from "axios";
 import moment from 'moment-timezone';
+import ShiningText from "../text/ShiningText";
 const Inbox = () => {
       const [emails,setEmails]=useState([])
       const { employeeData }=useContext(EmployeeContext)
@@ -57,13 +58,10 @@ const Inbox = () => {
     
     return (
         <div>
-
             <div className='outlet_title'>
                 <div>
-                    Inbox
+                    <ShiningText text='Inbox'/>
                 </div>
-
-
             </div>
             <div className="table-container">
             <div className="email-module">

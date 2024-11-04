@@ -14,7 +14,7 @@ function TProject() {
 
 
 function handlePopup(item){
-    setCurrentItem(item)
+    setCurrentItem(item) 
     setPopup(true)
 }
 console.log(projects)

@@ -6,6 +6,8 @@ import { FaRegCalendar } from "react-icons/fa";
 
 import axios from 'axios';
 import moment from 'moment';
+import ShiningText from '../text/ShiningText';
+import ProgressBar from '../bar/ProgressBar';
 function EProject() {
   const {  projects }=useContext(EmployeeContext)
   const [popup,setPopup]=useState(false)
@@ -73,7 +75,7 @@ console.log(projects)
 
       <div className='outlet_title'>
         <div>
-          Projects
+          <ShiningText text="Projects"/>
         </div>
        
         
@@ -102,12 +104,7 @@ console.log(projects)
                   {item.endDate?item.endDate.split("T")[0]:"-"}
                 </td>
                 <td>
-                <div className="progress-bar-container">
-                          <div
-                            className="progress-bar"
-                            style={{ width: `${item.progress}%` }}
-                          ></div>
-                        </div>
+                <ProgressBar value={item.progress}/>
                 </td>
                 <td><p className={`table_status ${item.status}`}>{item.status}</p></td>
             </tr>

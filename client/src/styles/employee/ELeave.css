@@ -1,0 +1,512 @@
+/* src/LeaveForm.css */
+.leave-form-container {
+    width: fit-content;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #f5fff6bb, #ecf3ffc3);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    animation: leave-fadeIn 1s ease-in-out;
+    min-width: 40%;
+   
+
+}
+  
+.apply_leave_form{
+    width: 100%;
+    height: 100vh;
+    background-color: #ffffff37;
+    backdrop-filter: blur(3px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 15;
+}
+  .leave-form-title {
+    text-align: center;
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    animation: leave-slideIn 1s ease-in-out;
+  }
+  
+  .leave-form-group {
+    margin-bottom: 15px;
+    animation: leave-fadeIn 1s ease-in-out;
+  }
+  
+  .leave-form-group label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 5px;
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+  }
+  
+  .leave-form-input {
+    width: 90%;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: transform 0.3s;
+  }
+  
+  .leave-form-input:focus {
+    outline: none;
+    border-color: #76c7c0;
+  }
+  
+
+  
+  .leave-submit-button:hover {
+    background-color: #5ab9a8;
+    transform: scale(1.05);
+  }
+  
+  .leave-total-leave {
+    margin: 20px 0;
+    font-size: 1.2rem;
+    text-align: center;
+  }
+  
+  .leave-leave-count {
+    font-weight: bold;
+    color: #ff6b6b;
+  }
+  
+  @keyframes leave-fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes leave-slideIn {
+    from {
+      transform: translateY(-20px);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  
+
+  /* ///radio button in leave////////// */
+
+  @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500,700);
+
+
+.continput {
+	margin: auto;
+	width: fit-content;
+	height: fit-content;
+	padding: 0px;
+    width: 80%;
+ 
+
+}
+
+.continput ul{
+	list-style-type: none;
+	width: 80%;
+	margin: auto;
+    display: flex;
+    flex-direction: row;
+    padding-left: 40px;
+}
+
+.continput li {
+	position: relative;
+	padding: 10px;
+	padding-left: 40px;
+	height:30px;
+}
+.continput li>label {
+	text-transform: capitalize;
+    letter-spacing: 0.5px;
+    font-weight: 300;
+}
+
+.continput label:before {
+    content: "";
+    width: 13px;
+    height: 13px;
+    background: #597adca7;
+    position: absolute;
+    left: 8px;
+		top: calc(50% - 12px);
+    box-sizing: border-box;
+    border-radius: 50%;
+}
+
+.continput input[type="radio"] {
+	opacity: 0;
+	-webkit-appearance: none;
+	display: inline-block;
+	vertical-align: middle;
+	z-index: 100;
+	margin: 0;
+	padding: 0;
+  width: 100%;
+	height: 30px;
+	position: absolute;
+	left: 0;
+	top: calc(50% - 15px);
+	cursor: pointer;
+}
+
+.continput .bullet {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    left: 1px;
+    top: 6px;
+    border: 3.5px solid #747ff590;
+    opacity: 0;
+    border-radius: 50%;
+}
+
+.continput input[type="radio"]:checked ~ .bullet {
+	position:absolute;
+	opacity: 1;
+	animation-name: explode;
+	animation-duration: 0.350s;
+}
+
+.continput .line {
+	position: absolute;
+	width: 10px;
+	height: 2px;
+	background-color: #747ff590;
+	opacity:0;
+}
+
+.continput .line.zero {
+	left: 11px;
+	top: -21px;
+	transform: translateY(20px);
+	width: 2px;
+	height: 10px;
+}
+
+.continput .line.one {
+	right: -7px;
+	top: -11px;
+	transform: rotate(-55deg) translate(-9px);
+}
+
+.continput .line.two {
+	right: -20px;
+	top: 11px;
+	transform: translate(-9px);
+}
+
+.continput .line.three {
+	right: -8px;
+	top: 35px;
+	transform: rotate(55deg) translate(-9px);
+}
+
+.continput .line.four {
+	left: -8px;
+	top: -11px;
+	transform: rotate(55deg) translate(9px);
+}
+
+.continput .line.five {
+	left: -20px;
+	top: 11px;
+	transform: translate(9px);
+}
+
+.continput .line.six {
+	left: -8px;
+	top: 35px;
+	transform: rotate(-55deg) translate(9px);
+}
+
+.continput .line.seven {
+	left: 11px;
+	bottom: -21px;
+	transform: translateY(-20px);
+	width: 2px;
+	height: 10px;
+}
+
+.continput input[type="radio"]:checked ~ .bullet .line.zero{
+	animation-name:drop-zero;
+	animation-delay: 0.100s;
+	animation-duration: 0.9s;
+	animation-fill-mode: forwards;
+}
+
+.continput input[type="radio"]:checked ~ .bullet .line.one{
+	animation-name:drop-one;
+	animation-delay: 0.100s;
+	animation-duration: 0.9s;
+	animation-fill-mode: forwards;
+}
+
+.continput input[type="radio"]:checked ~ .bullet .line.two{
+	animation-name:drop-two;
+	animation-delay: 0.100s;
+	animation-duration: 0.9s;
+	animation-fill-mode: forwards;
+}
+
+.continput input[type="radio"]:checked ~ .bullet .line.three{
+	animation-name:drop-three;
+	animation-delay: 0.100s;
+	animation-duration: 0.9s;
+	animation-fill-mode: forwards;
+}
+
+.continput input[type="radio"]:checked ~ .bullet .line.four{
+	animation-name:drop-four;
+	animation-delay: 0.100s;
+	animation-duration: 0.9s;
+	animation-fill-mode: forwards;
+}
+
+.continput input[type="radio"]:checked ~ .bullet .line.five{
+	animation-name:drop-five;
+	animation-delay: 0.100s;
+	animation-duration: 0.9s;
+	animation-fill-mode: forwards;
+}
+
+.continput input[type="radio"]:checked ~ .bullet .line.six{
+	animation-name:drop-six;
+	animation-delay: 0.100s;
+	animation-duration: 0.9s;
+	animation-fill-mode: forwards;
+}
+
+.continput input[type="radio"]:checked ~ .bullet .line.seven{
+	animation-name:drop-seven;
+	animation-delay: 0.100s;
+	animation-duration: 0.9s;
+	animation-fill-mode: forwards;
+}
+
+@keyframes explode {
+	0%{
+		opacity: 0;
+		transform: scale(10);
+	}
+	60%{
+		opacity: 1;
+		transform: scale(0.5);
+	}
+	100%{
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes drop-zero {
+	0% {
+		opacity: 0;
+		transform: translateY(20px);
+		height: 10px;
+	}
+	20% {
+		opacity:1;
+	}
+	100% {
+		transform: translateY(-2px);
+		height: 0px;
+		opacity:0;
+	}
+}
+
+@keyframes drop-one {
+	0% {
+		opacity: 0;
+		transform: rotate(-55deg) translate(-20px);
+		width: 10px;
+	}
+	20% {
+		opacity:1;
+	}
+	100% {
+		transform: rotate(-55deg) translate(9px);
+		width: 0px;
+		opacity:0;
+	}
+}
+
+@keyframes drop-two {
+	0% {
+		opacity: 0;
+		transform: translate(-20px);
+		width: 10px;
+	}
+	20% {
+		opacity:1;
+	}
+	100% {
+		transform: translate(9px);
+		width: 0px;
+		opacity:0;
+	}
+}
+
+@keyframes drop-three {
+	0% {
+		opacity: 0;
+		transform: rotate(55deg) translate(-20px);
+		width: 10px;
+	}
+	20% {
+		opacity:1;
+	}
+	100% {
+		transform: rotate(55deg) translate(9px);
+		width: 0px;
+		opacity:0;
+	}
+}
+
+@keyframes drop-four {
+	0% {
+		opacity: 0;
+		transform: rotate(55deg) translate(20px);
+		width: 10px;
+	}
+	20% {
+		opacity:1;
+	}
+	100% {
+		transform: rotate(55deg) translate(-9px);
+		width: 0px;
+		opacity:0;
+	}
+}
+
+@keyframes drop-five {
+	0% {
+		opacity: 0;
+		transform: translate(20px);
+		width: 10px;
+	}
+	20% {
+		opacity:1;
+	}
+	100% {
+		transform: translate(-9px);
+		width: 0px;
+		opacity:0;
+	}
+}
+
+@keyframes drop-six {
+	0% {
+		opacity: 0;
+		transform: rotate(-55deg) translate(20px);
+		width: 10px;
+	}
+	20% {
+		opacity:1;
+	}
+	100% {
+		transform: rotate(-55deg) translate(-9px);
+		width: 0px;
+		opacity:0;
+	}
+}
+
+@keyframes drop-seven {
+0% {
+		opacity: 0;
+		transform: translateY(-20px);
+		height: 10px;
+	}
+	20% {
+		opacity:1;
+	}
+	100% {
+		transform: translateY(2px);
+		height: 0px;
+		opacity:0;
+	}
+}
+
+
+/* ///leave apply bottom button////////////////// */
+.leave_apply_bottom_btn {
+    font-family: inherit;
+    font-size: 20px;
+    background: royalblue;
+    color: white;
+    padding: 0.5em 0.8em;
+    padding-left: 0.9em;
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: 25px;
+    overflow: hidden;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .leave_apply_bottom_btn.cancel{
+    background-color: rgb(168, 13, 13);
+  }
+  .formbutton_divv{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: center;
+  }
+  
+  .leave_apply_bottom_btn span {
+    display: block;
+    margin-left: 0.3em;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .leave_apply_bottom_btn svg {
+    display: block;
+    transform-origin: center center;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .leave_apply_bottom_btn:hover .svg-wrapper {
+    animation: fly-1 0.6s ease-in-out infinite alternate;
+  }
+  
+  .leave_apply_bottom_btn:hover svg {
+    transform: translateX(1.2em) rotate(45deg) scale(1.1);
+  }
+  
+  .leave_apply_bottom_btn:hover span {
+    transform: translateX(5em);
+  }
+  
+  .leave_apply_bottom_btn:active {
+    transform: scale(0.95);
+  }
+  
+  @keyframes fly-1 {
+    from {
+      transform: translateY(0.1em);
+    }
+  
+    to {
+      transform: translateY(-0.1em);
+    }
+  }
+  
+
+
+
+
+  

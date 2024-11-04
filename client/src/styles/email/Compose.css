@@ -1,0 +1,140 @@
+/* src/ComposeEmail.css */
+
+.compose-container {
+    width: 80%;
+    margin: 50px auto;
+    padding: 25px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .compose-container h2 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .compose-input {
+    width: 90%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  
+  .input-group {
+    position: relative;
+  }
+  
+  .suggestions-list {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    right: 0;
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    background-color: white;
+    z-index: 1000;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .suggestions-list li {
+    padding: 12px;
+    cursor: pointer;
+  }
+  
+  .suggestions-list li:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .compose-textarea {
+    width: 90%;
+    padding: 15px;
+    height: 200px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    resize: vertical;
+    margin: 10px 0;
+  }
+  
+  .compose-buttons {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    margin-top: 20px;
+
+  }
+  
+  .send-button {
+    padding: 12px 30px;
+    font-size: 14px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 10px;
+    width: fit-content;
+  }
+  
+  .discard-button {
+    background-color:transparent;
+    color: rgb(85, 85, 85);
+    border: none;
+    font-size: 1.5rem;
+  }
+  
+  .discard-button:hover {
+    cursor: pointer;
+    color: rgb(197, 86, 86);
+  }
+  
+  .send-button {
+    background-color: #3b6de0;
+    color: white;
+  }
+  
+  .send-button:hover {
+    background-color: #388e3c;
+  }
+  .compose-tags{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    padding-left: 0.5rem;
+    margin-bottom: 1rem;
+
+  }
+.compose-tags>button{
+  border-radius: 5px;
+  padding: 1px 5px;
+}
+.compose-tags .work{
+  background-color: rgba(94, 104, 100, 0.222);
+  border: 1px solid rgba(16, 51, 29, 0.281);
+}
+.compose-tags .alert{
+  background-color: rgba(94, 104, 100, 0.222);
+  border: 1px solid rgba(16, 51, 29, 0.281);
+}
+.compose-tags .news{
+  background-color: rgba(94, 104, 100, 0.222);
+  border: 1px solid rgba(16, 51, 29, 0.281);
+}
+.compose-tags .work.true{
+  background-color: rgb(246, 246, 108);
+  border: 1px solid rgba(123, 123, 20, 0.744);
+}
+.compose-tags .alert.true{
+  background-color: rgba(236, 152, 131, 0.34);
+  border: 1px solid rgba(159, 7, 7, 0.314);
+}
+.compose-tags .news.true{
+  background-color: rgba(33, 151, 94, 0.222);
+  border: 1px solid rgba(5, 135, 50, 0.281);
+}

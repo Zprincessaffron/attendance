@@ -7,6 +7,10 @@ const leaveSchema = new mongoose.Schema({
   },
   leaveReason: {
     type: String,
+    required: false,
+  },
+  leaveType: {
+    type: String,
     required: true,
   },
   leaveStatus: {

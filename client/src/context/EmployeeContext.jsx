@@ -9,6 +9,7 @@ export const EmployeeProvider = ({ children }) => {
   const [AttendanceData, setAttendanceData] = useState([]); 
   const [employeeData,setEmployeeData]=useState([])
   const [leaveData,setLeaveData]=useState([])
+  const [allEmployeesData, setAllEmployeesData] = useState([])
   const [ projectData,setProjectData ]=useState([])
   const [ TodayAttendance,setTodayAttendance ]=useState([])
   const [ particularEmployeeAttendance,setParticularEmployeeAttendance ]=useState([])
@@ -17,6 +18,7 @@ export const EmployeeProvider = ({ children }) => {
   const [teamMembersData,setTeamMembersData]=useState([])
   const [loading,setLoading]=useState(true)
   const [pickedDate,setPickedDate]=useState()
+  const [showEmailBox,setShowEmailBox]=useState(false)
 
 
   useEffect(() => {
@@ -34,7 +36,7 @@ export const EmployeeProvider = ({ children }) => {
   
 
   return (
-    <EmployeeContext.Provider value={{ pickedDate,setPickedDate,loading,setLoading,teamMembersData,setTeamMembersData,projects,setProjects,teamMembers,setTeamMembers,particularEmployeeAttendance,setParticularEmployeeAttendance,TodayAttendance,setTodayAttendance,projectData,setProjectData,leaveData,setLeaveData,AttendanceData, setAttendanceData, employeeData,setEmployeeData }}>
+    <EmployeeContext.Provider value={{ showEmailBox,setShowEmailBox, allEmployeesData, setAllEmployeesData,pickedDate,setPickedDate,loading,setLoading,teamMembersData,setTeamMembersData,projects,setProjects,teamMembers,setTeamMembers,particularEmployeeAttendance,setParticularEmployeeAttendance,TodayAttendance,setTodayAttendance,projectData,setProjectData,leaveData,setLeaveData,AttendanceData, setAttendanceData, employeeData,setEmployeeData }}>
       {children}
     </EmployeeContext.Provider>
   );

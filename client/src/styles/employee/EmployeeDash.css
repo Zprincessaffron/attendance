@@ -130,14 +130,78 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    color: blue;
   }
   .outlet_title2>button{
-    padding: 10px 25px;
-    background-color: lightgreen;
-    border: none;
-    border-radius:5px;
+   border: none;
+   height: fit-content;
+   width: fit-content;
+ 
 
   }
+  /* ////leave apply ////////// */
+
+ /* From Uiverse.io by KINGFRESS */ 
+.leave_apply {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: white;
+  background-color: #171717;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 2em;
+  position: relative;
+  cursor: pointer;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  font-size: 1rem;
+  overflow: hidden;
+}
+.leave_apply:active{
+  scale: 95%;
+}
+.leave_apply span:not(:nth-child(6)) {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 30px;
+  width: 30px;
+  background-color: #0c66ed;
+  border-radius: 50%;
+  transition: .6s ease;
+}
+
+.leave_apply span:nth-child(6) {
+  position: relative;
+}
+
+.leave_apply span:nth-child(1) {
+  transform: translate(-3.3em, -4em);
+}
+
+.leave_apply span:nth-child(2) {
+  transform: translate(-6em, 1.3em);
+}
+
+.leave_apply span:nth-child(3) {
+  transform: translate(-.2em, 1.8em);
+}
+
+.leave_apply span:nth-child(4) {
+  transform: translate(3.5em, 1.4em);
+}
+
+.leave_apply span:nth-child(5) {
+  transform: translate(3.5em, -3.8em);
+}
+
+.leave_apply:hover span:not(:nth-child(6)) {
+  transform: translate(-50%, -50%) scale(4);
+  transition: 1.5s ease;
+}
+/* //////////////////////////////////////// */
+  
   .e_atten_pop{
     width: 100%;
     height: 100vh;

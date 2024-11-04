@@ -2,6 +2,9 @@ import React, { useContext, useEffect, useState } from 'react'
 import { EmployeeContext } from '../../context/EmployeeContext'
 import axios from 'axios';
 import moment from 'moment';
+import FlowerButton from '../button/FlowerButton';
+import StartButton from '../button/StartButton';
+import ShiningText from '../text/ShiningText';
 function EAttendance() {
   const { AttendanceData,employeeData,setAttendanceData  }=useContext(EmployeeContext)
   const [popup,setPopup]=useState(false)
@@ -111,10 +114,12 @@ console.log(AttendanceData)
 
       <div className='outlet_title'>
         <div>
-          Attendance
+          <ShiningText  text="attendance"/>
         </div>
         <div className='outlet_title2'>
-          <button onClick={handleStart}>Start</button>
+          <button onClick={handleStart}><StartButton /></button>
+          
+           
         </div>
         
       </div>

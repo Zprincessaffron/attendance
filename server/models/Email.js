@@ -13,7 +13,7 @@ const emailSchema = new Schema({
   },
   senderName: {
     type: String,
-    required: true,
+    required: false,
   },
   senderId: {
     type: String,

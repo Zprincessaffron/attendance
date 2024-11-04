@@ -16,8 +16,8 @@ const Login = () => {
     try {
       // Sending credentials to backend
       const response = await axios.post('/auth/login', {
-        "employeeId":"HRD1234",
-        // "employeeId":"HRD1111",
+        // "employeeId":"HRD1234",
+        "employeeId":"HRD1111",
         "password":"12345678",
       });
 
@@ -45,6 +45,9 @@ const Login = () => {
      if(accessCode == 200){
       navigate('/tl/home')
    }
+   if(accessCode == 300){
+    navigate('/director')
+ }
 
 
     } catch (err) {

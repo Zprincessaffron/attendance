@@ -1,0 +1,32 @@
+/* From Uiverse.io by vinodjangid07 */ 
+#checkbox {
+    display: none;
+  }
+  
+  .switch {
+    margin-top: 10px;
+    position: relative;
+    width: fit-content;
+    padding: 7px 12px;
+    background-color: rgb(46, 46, 46);
+    border-radius: 50px;
+    z-index: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: white;
+    font-size: 0.9em;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    transition: all 0.3s;
+  }
+  .switch svg path {
+    fill: white;
+  }
+  #checkbox:checked + .switch {
+    background-color: rgb(19, 47, 149);
+    box-shadow: 0px 0px 40px rgba(10, 40, 205, 0.438);
+  }
+  

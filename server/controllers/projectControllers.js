@@ -103,3 +103,30 @@ export const getProjectsByTeamLead = async (req, res) => {
     res.status(500).json({ message: 'Error retrieving projects', error });
   }
 };
+
+export const getAllProjects = async (req, res) => {
+  try {
+    const projects = await Project.find(); // Fetch all projects
+    res.status(200).json({ message: 'Projects retrieved successfully', data: projects });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error retrieving projects', error });
+  }
+};
+
+// Get projects by department
+export const getProjectsByDepartment = async (req, res) => {
+  try {
+    const { department } = req.params;
+
+    if (!department) {
+      return res.status(400).json({ message: 'Department parameter is required' });
+    }
+
+    const projects = await Project.find({ department }); // Filter projects by department
+    res.status(200).json({ message: `Projects for department: ${department} retrieved successfully`, data: projects });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error retrieving projects by department', error });
+  }
+};

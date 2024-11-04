@@ -8,14 +8,12 @@ import '../../styles/teamlead/THome.css'
 import { RiProjectorLine } from "react-icons/ri";
 import { IoPerson } from "react-icons/io5";
 import Loader from '../loader/Loader';
-import ShiningText from '../text/ShiningText';
-import ProgressBar from '../bar/ProgressBar';
 
-function THome() {
-  const { allEmployeesData, setAllEmployeesData,loading,setLoading,projects, setProjects, employeeData, teamMembers, setTeamMembers, teamMembersData, setTeamMembersData } = useContext(EmployeeContext)
+
+function DHome() {
+  const { loading,setLoading,projects, setProjects, employeeData, teamMembers, setTeamMembers, teamMembersData, setTeamMembersData } = useContext(EmployeeContext)
   const [ getData , setGetData]=useState(false)
-  const [activeProject,setActiveProject]=useState([])
-
+  
 
   async function getProjects() {
     console.log("opening function1");
@@ -26,7 +24,7 @@ function THome() {
   
     while (retries < maxRetries) {
       try {
-        const response = await axios.get(`/project/teamLead/${employeeData.employeeId}`);
+        const response = await axios.get(`/project/all`);
         setProjects(response.data.data);
         console.log(response.data.data)
         // Call setTeamMembersFunc after getting projects
@@ -62,7 +60,6 @@ function THome() {
   
         // Check if there are any active projects
         if (activeProjects.length > 0) {
-          setActiveProject(activeProjects)
           const teamMembersList = activeProjects[0].teamMembers;
           setTeamMembers(teamMembersList);
           console.log("Team members:", teamMembersList);
@@ -100,8 +97,8 @@ function THome() {
         const employees = response.data;
   
         // Filter employees based on teamMembers
-        const filtered = employees.filter(employee => teamMembers.includes(employee.employeeId));
-        setTeamMembersData(filtered);
+        // const filtered = employees.filter(employee => teamMembers.includes(employee.employeeId));
+        setTeamMembersData(employees);
         console.log("Filtered team members data:", filtered);
         break; // Exit loop on success
       } catch (error) {
@@ -120,22 +117,11 @@ function THome() {
     }
   }
   
-  async function getAllemployeesData(){
-    try {
-      const response = await axios.get(`/employee/all`);
-      setAllEmployeesData(response.data);
-    } catch (error) {
-      console.error("Error:", error);
-     
-    }
-
-  }
   // useEffect to initiate the process
   useEffect(() => {
     setTimeout(() => {
       if(loading == true){
         getProjects();
-        getAllemployeesData()
       }
     }, 2000);
   }, [getData]);
@@ -146,8 +132,6 @@ function THome() {
       <div className='outlet_title'>
         <div>
           Home
-          <ShiningText text="Home"/>
-
         </div>
 
 
@@ -271,4 +255,4 @@ function THome() {
   )
 }
 
-export default THome
+export default DHome

@@ -26,6 +26,17 @@ import TTeammembers from './component/teamLead/TTeammembers';
 import ETeams from './component/employee/ETeams';
 import Inbox from './component/email/Inbox';
 import EmailDetail from './component/email/EmailDetail';
+import Compose from './component/email/Compose';
+import DLandingPage from './component/director/DLandingPage';
+import DDashboard from './component/director/DDashboard';
+import DHome from './component/director/DHome';
+import DAttendance from './component/director/DAttendance';
+import DTodayAttendance from './component/director/DTodayAttendance';
+import DEmployeeAttendance from './component/director/DEmployeeAttendance';
+import DLeaveRequest from './component/director/DLeaveRequest';
+import DEmployeeLeave from './component/director/DEmployeeLeave';
+import DProject from './component/director/DProject';
+import DTeams from './component/director/DTeams';
 function App() {
   return (
     <>
@@ -47,7 +58,19 @@ function App() {
           </Route>
           
         </Route>
-
+        <Route element={<ProtectedRoute allowedRoles={['300']} />}>
+          <Route path="/director" element={<DDashboard />} >
+          <Route path="home" element={<DHome />} />
+          <Route path="attendance" element={<DAttendance/>} />
+          <Route path="todayattendance" element={<DTodayAttendance/>} />
+          <Route path="employeeattendance" element={<DEmployeeAttendance/>} />
+          <Route path="leaverequest" element={<DLeaveRequest />} />
+          <Route path="employeeleave" element={<DEmployeeLeave />} />
+          <Route path="project" element={<DProject />} />
+          <Route path="team" element={<DTeams />} />
+          </Route>
+          
+        </Route>
         <Route element={<ProtectedRoute allowedRoles={['200']} />}>
           <Route path="/tl" element={<TeamLeadDash />} >
           <Route path="home" element={<THome />} />
@@ -72,6 +95,7 @@ function App() {
           <Route path="teams" element={<ETeams />} />
           <Route path="inbox" element={<Inbox />} />
           <Route path="email-detail" element={<EmailDetail />} />
+          <Route path="compose" element={<Compose />} />
 
 
 

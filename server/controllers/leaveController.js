@@ -4,7 +4,7 @@ import moment from 'moment-timezone';
 // Create a new leave request
 export const createLeaveRequest = async (req, res) => {
   try {
-    const { employeeId, leaveReason, fromDate, toDate } = req.body;
+    const { employeeId, leaveReason, fromDate, toDate ,leaveType} = req.body;
 
     // Validate that 'fromDate' is not later than 'toDate'
     if (new Date(fromDate) > new Date(toDate)) {
@@ -21,6 +21,7 @@ export const createLeaveRequest = async (req, res) => {
     const newLeaveRequest = new Leave({
       employeeId,
       leaveReason,
+      leaveType,
       fromDate: formattedFromDate,
       toDate: formattedToDate,
       numberOfLeaves, // Add the calculated number of leaves

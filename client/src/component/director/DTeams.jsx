@@ -8,9 +8,8 @@ import axios from 'axios';
 import moment from 'moment';
 import { MdOutlineCall } from "react-icons/md";
 import { IoMailOutline } from "react-icons/io5";
-import ShiningText from '../text/ShiningText';
 
-function ETeams() {
+function DTeams() {
   const { teamMembersData }=useContext(EmployeeContext)
   const [popup,setPopup]=useState(false)
   const [currentItem,setCurrentItem]=useState()
@@ -74,7 +73,7 @@ function handlePopup(item){
 
       <div className='outlet_title'>
         <div>
-          <ShiningText text="Teams"/>
+          Projects
         </div>
        
         
@@ -115,4 +114,4 @@ function handlePopup(item){
   )
 }
 
-export default ETeams
+export default DTeams
