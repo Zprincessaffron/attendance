@@ -151,22 +151,27 @@ export const getTodayAttendanceForDevelopment = async (req, res) => {
 
 export const getTodayAttendance = async (req, res) => {
   try {
-    const today = new Date();
-    const startOfDay = new Date(today.setHours(0, 0, 0, 0));
-    const endOfDay = new Date(today.setHours(23, 59, 59, 999));
+    // Get the current date (set the time to midnight)
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0); // Set the time to 00:00:00 to match the whole day
 
-    const attendances = await Attendance.find({
-        date: {
-            $gte: startOfDay,
-            $lte: endOfDay
-        }
+    // Query the database for records where the date is today
+    const todaysAttendance = await Attendance.find({
+      date: { $gte: currentDate, $lt: new Date(currentDate.getTime() + 86400000) } // Matches today's date (00:00 to 23:59)
     });
 
-    res.status(200).json(attendances);
-} catch (error) {
-    res.status(500).json({ message: error.message });
-}
-}
+    // If no records are found
+    if (todaysAttendance.length === 0) {
+      return res.status(404).json({ message: 'No attendance records found for today.' });
+    }
+
+    // Send the records as a response
+    res.status(200).json(todaysAttendance);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
 
 export const getEmployeeMonthlyAttendance = async (req, res) => {
   const { employeeId } = req.params;
