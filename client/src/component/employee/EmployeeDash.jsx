@@ -12,6 +12,11 @@ import { RiProjectorLine } from "react-icons/ri";
 import PlusButton from '../button/PlusButton';
 import EmailBox from '../email/EmailBox';
 import { EmployeeContext } from '../../context/EmployeeContext';
+import { BsPeople } from "react-icons/bs";
+import { FiUser } from "react-icons/fi";
+import { BsInbox } from "react-icons/bs";
+import { TfiWrite } from "react-icons/tfi";
+
 function EmployeeDash() { 
   const [show,setShow]=useState(false)
   const [showLeave,setShowLeave]=useState(false)
@@ -23,24 +28,35 @@ function EmployeeDash() {
     setShow(!show)
     setDivColor("attendance")
     setShowLeave(false)
+    setShowMail(false)
  
   }
   function handleHome(){
     setDivColor("home")
+    setShowMail(false)
+
   }
   function handleLeave(){
     setShowLeave(!showLeave)
     setShow(false)
     setDivColor("leave")
+    setShowMail(false)
+
   }
   function handleProject(){
     setDivColor("project")
+    setShowMail(false)
+
   }
   function handleTeam(){
     setDivColor("team")
+    setShowMail(false)
+
   }
   function handleDivChange(val){
     setDivColor(val)
+    setShowMail(false)
+
   }
   function handleInbox(){
     setDivColor('email')
@@ -84,11 +100,11 @@ function EmployeeDash() {
     </div>
     <div  className={`das_con_sidebar_1 ${divColor=="team"?"true":""}`} onClick={handleTeam} >
       <Link  className='tdash_link' style={{ textDecoration: 'none' }} to="/employee/teams" >
-       <p><RiProjectorLine/> TEAM MEMBERS</p></Link>
+       <p><BsPeople/> TEAM MEMBERS</p></Link>
     </div>
     <div className={`das_con_sidebar_1 ${divColor == "profile" ? "true" : ""}`} onClick={() => { handleDivChange("profile") }} >
                 <Link className='tdash_link' style={{ textDecoration: 'none' }} to="/employee/profile" >
-                  <p><RiProjectorLine /> PROFILE</p></Link>
+                  <p><FiUser /> PROFILE</p></Link>
               </div>
     <div  className={`das_con_sidebar_1 ${divColor=="email"?"true":""}`} onClick={handleInbox}  >
     <p><AiOutlineMail/> EMAIL</p>
@@ -97,11 +113,11 @@ function EmployeeDash() {
       <>
        <div  className={`das_con_sidebar_1 ${divColor=="inbox"?"true":""}`} onClick={()=>handleDivChange('inbox')}>
     <Link  className='tdash_link' style={{ textDecoration: 'none' }} to="/employee/inbox" >
-    <p> INBOX</p></Link>
+    <p> <BsInbox/> INBOX</p></Link>
     </div>
     <div  className={`das_con_sidebar_1 ${divColor=="compose"?"true":""}`}onClick={()=>handleDivChange('compose')}>
     <Link  className='tdash_link' style={{ textDecoration: 'none' }} to="/employee/compose" >
-    <p> Compose</p></Link>
+    <p><TfiWrite/> Compose</p></Link>
     
     </div>
       </>

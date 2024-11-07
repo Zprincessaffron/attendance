@@ -25,7 +25,7 @@ const Login = () => {
     try {
       // Sending credentials to backend
       const response = await axios.post('/auth/login', {
-        "employeeId":email,
+        "employeeId":email.toUpperCase(),
         // "employeeId":"HRD1111",
         "password":password
       });
