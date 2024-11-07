@@ -120,6 +120,8 @@ function App() {
           <Route path="inbox" element={<Inbox />} />
           <Route path="email-detail" element={<EmailDetail />} />
           <Route path="compose" element={<Compose />} />
+          <Route path="profile" element={<Profile />} />
+
           </Route>
           
         </Route>

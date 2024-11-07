@@ -86,6 +86,10 @@ function EmployeeDash() {
       <Link  className='tdash_link' style={{ textDecoration: 'none' }} to="/employee/teams" >
        <p><RiProjectorLine/> TEAM MEMBERS</p></Link>
     </div>
+    <div className={`das_con_sidebar_1 ${divColor == "profile" ? "true" : ""}`} onClick={() => { handleDivChange("profile") }} >
+                <Link className='tdash_link' style={{ textDecoration: 'none' }} to="/employee/profile" >
+                  <p><RiProjectorLine /> PROFILE</p></Link>
+              </div>
     <div  className={`das_con_sidebar_1 ${divColor=="email"?"true":""}`} onClick={handleInbox}  >
     <p><AiOutlineMail/> EMAIL</p>
     </div>
@@ -104,7 +108,7 @@ function EmployeeDash() {
     ):null}
    
   </div>       
-</nav>
+</nav> 
 </div>
     {/* Dynamic Content Area */}
     <div className='das_con_outlet'>

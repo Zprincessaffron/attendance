@@ -19,7 +19,7 @@ console.log("teammembers",allEmployeesData)
     const alltempTeamMembers = allEmployeesData
     const allTeamLeads = teamMembersData
 
-
+ 
     const handleAddTeamMember = (e) => {
         const member = e.target.value;
         if (member && !tempTeamMembers.includes(member)) {
@@ -33,15 +33,6 @@ console.log("teammembers",allEmployeesData)
 
 
     async function handleCreateProject(e) {
-        // const newProject = {
-        //     projectName,
-        //     teamMembers:tempTeamMembers,
-        //     createdBy:employeeData.employeeId,
-        //     teamLead,
-        //     department,
-        //     startDate:startDate.toISOString().split("T")[0],
-        //     deadlineDate:deadlineDate.toISOString().split("T")[0]
-        // };
         const newProject= {
             "projectName": "Website Redesign",
             "teamMembers": ["Hrd1111","HRD1234"],
@@ -169,8 +160,12 @@ console.log("teammembers",allEmployeesData)
                         dateFormat="MM/dd/yyyy"
                         placeholderText="Select deadline date"
                     />
-                    <button type="button" onClick={handleCreateProject}>Create Project</button>
-                    <button type="button" onClick={()=>setShowProjectForm(false)} className="close-btn">Close</button>
+                    <div className='popup_bottomm'>
+                    <button type="button" className='popup-update-button' onClick={handleCreateProject}>Create Project</button>
+                    <button type="button" onClick={()=>setShowProjectForm(false)} className="popup-close-button">Close</button>
+                    </div>
+
+                    
                 </form>
             </div>
         </div>
