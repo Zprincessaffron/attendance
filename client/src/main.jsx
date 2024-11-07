@@ -4,7 +4,7 @@ import App from './App.jsx'
 import './index.css'
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:5000/';
+axios.defaults.baseURL = 'https://attendance-2-ziuy.onrender.com';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

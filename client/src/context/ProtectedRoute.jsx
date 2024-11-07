@@ -17,7 +17,7 @@ const ProtectedRoute = ({ allowedRoles }) => {
   
 
   // If userRole is in allowedRoles, allow access; otherwise, redirect to login
-  return allowedRoles.includes(userRole) ? <Outlet /> : <Navigate to="/login" />;
+  return allowedRoles.includes(userRole) ? <Outlet /> : <Navigate to="/" />;
 };
 
 export default ProtectedRoute;
