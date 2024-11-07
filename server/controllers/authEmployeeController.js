@@ -43,36 +43,44 @@ export const registerAuthEmployee = async (req, res) => {
   
 // Login employee
 export const loginAuthEmployee = async (req, res) => {
-    const { employeeId, password } = req.body;
-  
-    try {
+  const { employeeId, password } = req.body;
+
+  try {
       // Find employee by employeeId
       const employee = await AuthEmployee.findOne({ employeeId });
       if (!employee) {
-        return res.status(400).json({ message: 'Employee not found' });
+          return res.status(400).json({ message: 'Employee not found' });
       }
-  
+
       // Use bcrypt.compare() to compare the entered password with the hashed password
       const isMatch = await bcrypt.compare(password, employee.password);
       if (!isMatch) {
-        return res.status(400).json({ message: 'Invalid credentials' });
+          return res.status(400).json({ message: 'Invalid credentials' });
       }
-  
-      // Generate JWT token if passwords match
+
+      // Generate JWT token if passwords match and set the expiration time to 30 seconds
       const token = jwt.sign(
-        { employeeId: employee.employeeId, role: employee.role, department: employee.department,name:employee.name,accessCode:employee.accessCode },
-        'Hello',    );
-  
+          { 
+              employeeId: employee.employeeId, 
+              role: employee.role, 
+              department: employee.department,
+              name: employee.name,
+              accessCode: employee.accessCode
+          },
+          'Hello',    // Secret key (you should store it securely, e.g., in environment variables)
+          { expiresIn: '30s' }  // Token expires in 30 seconds
+      );
+
       // Respond with token
       res.status(200).json({
-        message: 'Login successful',
-        token: token,
+          message: 'Login successful',
+          token: token,
       });
-    } catch (error) {
+  } catch (error) {
       console.error('Error during login:', error);
       res.status(500).json({ message: 'Error logging in', error: error.message });
-    }
-  };
+  }
+};
 
 
 // Generate OTP and Send via Email for Password Reset
