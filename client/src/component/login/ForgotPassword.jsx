@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'; // For navigation after login
 import { jwtDecode } from "jwt-decode";
 import { EmployeeContext } from '../../context/EmployeeContext';
 import "./Login.css";
+import { HiOutlineMail } from "react-icons/hi";
 
 const ForgotPassword = () => {
   const { employeeData,setEmployeeData}=useContext(EmployeeContext)
@@ -57,7 +58,7 @@ const ForgotPassword = () => {
         <form onSubmit={handleLogin}  action="#" className="sign-in-form">
           <h2 className="title">Forgot Password</h2>
             <div className="input-field">
-            <i className="fas fa-lock"></i>
+            <i className="fas fa-lock"><HiOutlineMail/></i>
 
               <input style={{textTransform:"lowercase"}}
                 type="email"
@@ -69,8 +70,7 @@ const ForgotPassword = () => {
               />
             </div>
             {error && <p style={{ color: 'red' }}>{error}</p>}
-            <p onClick={()=>navigate('/forgot-password')}>forget password?</p>
-            <button type="submit" className="btn solid">Submit</button>
+            <button type="submit" className="login_btn">Submit</button>
           </form>
 
         </div>

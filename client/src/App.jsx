@@ -64,8 +64,6 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/otp-verify" element={<OtpVerify />} />
 
-
-
         {/* Protected Routes */}
         <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
           <Route path="/admin" element={<AdminDash />} >
@@ -82,7 +80,6 @@ function App() {
           <Route path="inbox" element={<Inbox />} />
           <Route path="email-detail" element={<EmailDetail />} />
           <Route path="compose" element={<Compose />} />
-
           </Route>
           
         </Route>

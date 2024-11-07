@@ -42,6 +42,7 @@
   letter-spacing: 1px;
   font-weight: 400;
   text-align: center;
+  letter-spacing: 2px;
 }
 .login_conn_div1>h3{
   font-size: 1.5rem;
@@ -96,9 +97,10 @@ form.sign-in-form {
 }
 
 .title {
-  font-size: 2.2rem;
+  font-size: 1.5rem;
   color: #444;
   margin-bottom: 10px;
+  font-weight: 500;
 }
 
 .input-field {
@@ -116,6 +118,9 @@ form.sign-in-form {
 
 .input-field i {
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   line-height: 55px;
   color: #7e7e7e;
   transition: 0.5s;
@@ -126,7 +131,7 @@ form.sign-in-form {
   background: transparent;
   outline: none;
   border: none;
-  border-radius: 20px;
+  border-radius: 20px; 
   line-height: 1;
   font-weight: 400;
   text-transform: uppercase;
@@ -171,12 +176,12 @@ form.sign-in-form {
 }
 
 
-.btn {
-  width: 150px;
+.login_btn {
+  padding: 12px 27px;
+  letter-spacing: 0.5px;
   background-color: #5995fd;
   border: none;
   outline: none;
-  height: 49px;
   border-radius: 49px;
   color: #fff;
   text-transform: uppercase;
@@ -186,7 +191,7 @@ form.sign-in-form {
   transition: 0.5s;
 }
 
-.btn:hover {
+.login_btn:hover {
   background-color: #4d84e2;
 }
 .panels-login_container {

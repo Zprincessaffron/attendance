@@ -111,7 +111,7 @@ function ELeave() {
   const handleLeaveType = (event) => {
     setLeaveType(event.target.value);
   };
-
+ console.log("leavedata",leaveData)
   return (
     <div>
       {popup ? (

@@ -5,6 +5,8 @@ import { jwtDecode } from "jwt-decode";
 import { EmployeeContext } from '../../context/EmployeeContext';
 import "./Login.css";
 import { useLocation } from 'react-router-dom';
+import { TbPassword } from "react-icons/tb";
+import { TbPasswordMobilePhone } from "react-icons/tb";
 
 const OtpVerify = () => {
   const { employeeData,setEmployeeData }=useContext(EmployeeContext)
@@ -54,7 +56,7 @@ const OtpVerify = () => {
         <form onSubmit={handleLogin}  action="#" className="sign-in-form">
           <h2 className="title">Forgot Password</h2>
             <div className="input-field">
-            <i className="fas fa-lock"></i>
+            <i className="fas fa-lock"><TbPassword/></i>
 
               <input style={{textTransform:"lowercase"}}
                 type="text"
@@ -66,7 +68,7 @@ const OtpVerify = () => {
               />
             </div>
             <div className="input-field">
-            <i className="fas fa-lock"></i>
+            <i className="fas fa-lock"><TbPasswordMobilePhone/></i>
 
               <input style={{textTransform:"lowercase"}}
                 type="password"
@@ -78,7 +80,7 @@ const OtpVerify = () => {
               />
             </div>
             {error && <p style={{ color: 'red' }}>{error}</p>}
-            <button type="submit" className="btn solid">Submit</button>
+            <button type="submit" className="login_btn">Submit</button>
           </form>
 
 

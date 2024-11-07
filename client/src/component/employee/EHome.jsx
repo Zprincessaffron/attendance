@@ -97,12 +97,14 @@ function EHome() {
   
     while (retries < maxRetries) {
       try {
-        const response = await axios.get(`/employee/fromdev`);
-        console.log(response.data);
+        const response = await axios.get(`/employee/all`);
+        console.log("all employee data",response.data);
         const employees = response.data;
+        console.log(teamMembers)
   
         // Filter employees based on teamMembers
         const filtered = employees.filter(employee => teamMembers.includes(employee.employeeId));
+        
         setTeamMembersData(filtered);
         console.log("Filtered team members data:", filtered);
         break; // Exit loop on success

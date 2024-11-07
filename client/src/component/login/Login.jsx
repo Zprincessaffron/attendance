@@ -3,7 +3,7 @@ import axios from 'axios'; // To make HTTP requests
 import { useNavigate } from 'react-router-dom'; // For navigation after login
 import { jwtDecode } from "jwt-decode";
 import { EmployeeContext } from '../../context/EmployeeContext';
-import "./Login.css";
+import "./Login.css"; 
 import { CiUser } from "react-icons/ci";
 import { TbPasswordMobilePhone } from "react-icons/tb";
 
@@ -13,7 +13,7 @@ import animationData from '../../animation/animation1.json';
 const Login = () => {
   const { employeeData,setEmployeeData }=useContext(EmployeeContext)
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState(''); 
   const [error, setError] = useState('');
   const [logged,setLogged] = useState(false)
   const navigate = useNavigate(); // To navigate after successful login
@@ -108,7 +108,7 @@ const Login = () => {
             </div>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <p className='login_forgetpw' onClick={()=>navigate('/forgot-password')}>forget password?</p>
-            <button type="submit" className="btn solid">Login</button>
+            <button type="submit" className="login_btn">Login</button>
           </form>
 
         </div>
