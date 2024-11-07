@@ -13,7 +13,7 @@ import ProgressBar from '../bar/ProgressBar';
 
 
 function EHome() {
-  const { activeProjects,setActiveProjects,allEmployeesData,setLeaveData,leaveData, setAllEmployeesData,loading,setLoading,projects, setProjects, employeeData, teamMembers, setTeamMembers, teamMembersData, setTeamMembersData,thisMonthAttendance,setThisMonthAttendance } = useContext(EmployeeContext)
+  const { setMydetail,activeProjects,setActiveProjects,allEmployeesData,setLeaveData,leaveData, setAllEmployeesData,loading,setLoading,projects, setProjects, employeeData, teamMembers, setTeamMembers, teamMembersData, setTeamMembersData,thisMonthAttendance,setThisMonthAttendance } = useContext(EmployeeContext)
   const [ getData , setGetData]=useState(false)
   const today = new Date();
   const day = today.getDate();
@@ -104,7 +104,7 @@ function EHome() {
   
         // Filter employees based on teamMembers
         const filtered = employees.filter(employee => teamMembers.includes(employee.employeeId));
-        
+
         setTeamMembersData(filtered);
         console.log("Filtered team members data:", filtered);
         break; // Exit loop on success
@@ -128,6 +128,16 @@ function EHome() {
     try {
       const response = await axios.get(`/employee/all`);
       setAllEmployeesData(response.data);
+    } catch (error) {
+      console.error("Error:", error);
+     
+    }
+
+  }
+  async function getMyDetail(){
+    try {
+      const response = await axios.get(`/employee/filter/${employeeData.employeeId}`);
+      setMydetail(response.data);
     } catch (error) {
       console.error("Error:", error);
      
@@ -170,6 +180,7 @@ function EHome() {
     }, 2000);
     fetchData()
     getthisMonthAttendance()
+    getMyDetail()
 
   }, [getData]);
   

@@ -12,7 +12,7 @@ import ShiningText from '../text/ShiningText';
 import ProgressBar from '../bar/ProgressBar';
 
 function THome() {
-  const { pendingLeave,setPendingLeave,TodayAttendance,setTodayAttendance,activeProjects,setActiveProjects,allEmployeesData, setAllEmployeesData,loading,setLoading,projects, setProjects, employeeData, teamMembers, setTeamMembers, teamMembersData, setTeamMembersData } = useContext(EmployeeContext)
+  const { setMydetail,pendingLeave,setPendingLeave,TodayAttendance,setTodayAttendance,activeProjects,setActiveProjects,allEmployeesData, setAllEmployeesData,loading,setLoading,projects, setProjects, employeeData, teamMembers, setTeamMembers, teamMembersData, setTeamMembersData } = useContext(EmployeeContext)
   const [ getData , setGetData]=useState(false)
 
   async function getProjects() {
@@ -132,6 +132,16 @@ function THome() {
     }
 
   }
+  async function getMyDetail(){
+    try {
+      const response = await axios.get(`/employee/filter/${employeeData.employeeId}`);
+      setMydetail(response.data);
+    } catch (error) {
+      console.error("Error:", error);
+     
+    }
+
+  }
   async function getTodayAttendanceData(){
     try {
       const response = await axios.get(`/attendance/today/dev`);
@@ -175,8 +185,10 @@ function THome() {
       if(loading == true){
         getProjects();
         getAllemployeesData()
+        
       }
     }, 2000);
+    getMyDetail()
   }, [getData]);
   
 
