@@ -6,7 +6,7 @@ export const checkIn = async (req, res) => {
     const { employeeId } = req.body;
 
     // Get today's date at midnight in IST (Asia/Kolkata)
-    const todayDate = moment().tz('Asia/Kolkata').startOf('day').toDate();
+    const todayDate = moment().tz('Asia/Kolkata').toDate(); 
 
     // Check if the employee has already checked in today
     const existingAttendance = await Attendance.findOne({
@@ -151,21 +151,21 @@ export const getTodayAttendanceForDevelopment = async (req, res) => {
 
 export const getTodayAttendance = async (req, res) => {
   try {
-      const today = new Date();
-      const startOfDay = new Date(today.setHours(0, 0, 0, 0));
-      const endOfDay = new Date(today.setHours(23, 59, 59, 999));
+    const today = new Date();
+    const startOfDay = new Date(today.setHours(0, 0, 0, 0));
+    const endOfDay = new Date(today.setHours(23, 59, 59, 999));
 
-      const attendances = await Attendance.find({
-          date: {
-              $gte: startOfDay,
-              $lte: endOfDay
-          }
-      });
+    const attendances = await Attendance.find({
+        date: {
+            $gte: startOfDay,
+            $lte: endOfDay
+        }
+    });
 
-      res.status(200).json(attendances);
-  } catch (error) {
-      res.status(500).json({ message: error.message });
-  }
+    res.status(200).json(attendances);
+} catch (error) {
+    res.status(500).json({ message: error.message });
+}
 }
 
 export const getEmployeeMonthlyAttendance = async (req, res) => {

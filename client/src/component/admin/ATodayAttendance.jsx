@@ -13,9 +13,11 @@ function ATodayAttendance() {
 
 
   async function getTodayAttendanceData(){
+    console.log("opneinig...")
     try {
       const response = await axios.get(`/attendance/today/all`);
-      const employees = response.data
+      const employees = response
+      console.log("all attendance",employees)
     //   console.log(teamMembers)
     //   const filtered = employees.filter(employee => 
     //     teamMembers.includes(employee.employeeId)
