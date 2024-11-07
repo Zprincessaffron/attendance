@@ -69,7 +69,7 @@ export const loginAuthEmployee = async (req, res) => {
         accessCode: employee.accessCode
       },
       process.env.JWT_SECRET || 'Hello',  // Secret key (use environment variable for production)
-      { expiresIn: '30s' }  // Token expires in 30 seconds
+      { expiresIn: '10h' }   // Token expires in 10hrs
     );
 
     console.log('Generated JWT token:', token);  // Log the token for debugging

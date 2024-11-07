@@ -5,7 +5,6 @@ import { jwtDecode } from "jwt-decode";
 
 const ProtectedRoute = ({ allowedRoles }) => {
   const { employeeData } =  useContext(EmployeeContext)
-  console.log(employeeData)
   
   useEffect(() => {
     try {
@@ -14,16 +13,28 @@ const ProtectedRoute = ({ allowedRoles }) => {
         // Extract relevant information from the token
         const { employeeId, role, department, name } = decodedToken;
         setUserRole(decodedToken.accessCode)
-    } catch (error) {
-        
+        setTimeout(() => {
+          isTokenExpired(decodedToken)
+        }, 100);
+    } catch (error) {   
+      setTokenExp(true)
     }
   }, [ ])
+  const [tokenExp,setTokenExp] = useState()
   const [userRole,setUserRole]=useState()
-
+  const isTokenExpired = (decodedToken) => {
+    if (!token) {
+      setTokenExp(true)
+      return
+    }
+    const currentTime = Date.now() / 1000; // current time in seconds
+    const exp = decodedToken.exp < currentTime
+    setTokenExp(exp)
+  };
   
 
   // If userRole is in allowedRoles, allow access; otherwise, redirect to login
-  return allowedRoles.includes(userRole) ? <Outlet /> : <div>hello</div>;
+  return tokenExp? <Navigate to='/'/> : allowedRoles.includes(userRole) ? <Outlet /> : <div>loading...</div>
 };
 
 export default ProtectedRoute;
