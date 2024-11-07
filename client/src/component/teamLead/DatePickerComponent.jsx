@@ -39,7 +39,7 @@ const DatePickerComponent = () => {
       
       
     } catch (err) {
-      setTodayAttendance(" ")
+      setTodayAttendance([])
 
       console.log(err)
     }

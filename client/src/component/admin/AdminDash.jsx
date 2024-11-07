@@ -1,52 +1,124 @@
-import React from 'react'
-import { Link,Outlet } from 'react-router-dom'
-function AdminDash() {
+import React, { useState } from 'react'
+import { Outlet, Link, Navigate } from 'react-router-dom';
+import '../../styles/employee/EmployeeDash.css'
+import Navbar from '../navbar/Navbar';
+import '../../styles/teamlead/TeamleadDash.css'
+import { IoHomeOutline } from "react-icons/io5";
+import { SlNote } from "react-icons/sl";
+import { CgNotes } from "react-icons/cg";
+import { RiProjectorLine } from "react-icons/ri";
+
+function AdminDash() { 
+  const [show,setShow]=useState(false)
+  const [showLeave,setShowLeave]=useState(false)
+  const [divColor,setDivColor]=useState('home')
+
+  function handleAttendance(){
+    setShow(!show)
+    setDivColor("attendance")
+    setShowLeave(false)
+ 
+  }
+  function handleHome(){
+    setDivColor("home")
+  }
+  function handleLeave(){
+    setShowLeave(!showLeave)
+    setShow(false)
+    setDivColor("leave")
+  }
+  function handleProject(){
+    setDivColor("project")
+  }
+  function handleTeam(){
+    setDivColor("team")
+  }
+  function handleDivChange(val){
+    setDivColor(val)
+  }
   return (
-    <div  style={{ display: 'flex', height: '100vh' }}>
-
-    {/* Static Sidebar */}
-
-    <div className='ad_sidebar'>
-            <div className='ad_sidebar01'>
-
-      <h2 className='heading_ad'>HEYRAM INFRASTRUCTURE</h2>
-      <nav>
-       <ul className='ad_ul' >
-          <li  >
-            <Link  style={{ textDecoration: 'none' }} className={`link ${selectedNav == "job"?"true":""}`}  to="/admindashboard/jobs" >
-            <span><BsBag/></span> <p >Jobs</p></Link>
-          </li>
-          <li >
-            <Link style={{ textDecoration: 'none' }}  className={`link ${selectedNav == "intern"?"true":""}`} to="/admindashboard/internships">
-            <span>
-              <MdOutlineSchool/>
-            </span>
-            <span>
-            Internships
-            </span>
-            </Link>
-          </li>
-          <li >
-            <Link style={{ textDecoration: 'none' }} className={`link ${selectedNav == "clients"?"true":""}`}  to="/admindashboard/clients" >
-            <span><IoPeopleOutline/> </span>
-            <span>Clients</span>
-            </Link>
-          </li>
-          <li >
-            <Link style={{ textDecoration: 'none' }} className={`link ${selectedNav == "queries"?"true":""}`} to="/admindashboard/queries" >
-            <span><IoIosHelpCircleOutline/></span> <span>Queries</span></Link>
-          </li>
-         
-        </ul> 
-             
-      </nav>
+    <div  className='das_containner'>
+      <div className='das_containner1'>
+      <Navbar/>
       </div>
-    </div>
+      <div className='das_containner2'>
+      <div className='das_con_sidebar'>
 
+<nav>
+ <div className='das_con_sidebar_main'>
+  <div className='das_con_sidebar_title'>
+    <div>DIRECTOR DASHBOARD</div>
+
+  </div>
+    <div className={`das_con_sidebar_1 ${divColor=="home"?"true":""}`} onClick={handleHome} >
+      <Link  className='tdash_link'  s style={{ textDecoration: 'none' }}  to="/admin/home" >
+       <p ><IoHomeOutline /> HOME</p>
+       </Link>
+    </div>
+    <div  className={`das_con_sidebar_1 ${divColor=="attendance"?"true":""}`} onClick={handleAttendance} >
+      <span>
+      <p ><SlNote />ATTENDANCE</p>
+      </span>
+    </div>
+     {show ?(
+      <>
+       <div  className={`das_con_sidebar_1 ${divColor=="todayattendance"?"true":""}`} onClick={()=>{handleDivChange("todayattendance")}} >
+      <Link  className='tdash_link' style={{ textDecoration: 'none' }}  to="/admin/todayattendance"> 
+      <span>
+      TODAY ATTENDANCE
+      </span>
+      </Link>
+    </div>
+    <div  className={`das_con_sidebar_1 ${divColor=="eattendance"?"true":""}`}  onClick={()=>{handleDivChange("eattendance")}} >
+    <Link  className='tdash_link' style={{ textDecoration: 'none' }}  to="/admin/employeeattendance"> 
+      <span>
+      EMPLOYEE ATTENDANCE
+      </span>
+      </Link>
+    </div>
+      </>
+     ):null}
+
+<div  className={`das_con_sidebar_1 ${divColor=="leave"?"true":""}`} onClick={handleLeave} >
+      <span>
+      <p ><CgNotes />LEAVE</p>
+      </span>
+    </div>
+     {showLeave ?(
+      <>
+       <div  className={`das_con_sidebar_1 ${divColor=="leaverequest"?"true":""}`} onClick={()=>{handleDivChange("leaverequest")}} >
+       <Link  className='tdash_link' style={{ textDecoration: 'none' }}  to="/admin/leaverequest"> 
+      <span>
+      LEAVE REQUESTS
+      </span>
+      </Link>
+    </div>
+    <div  className={`das_con_sidebar_1 ${divColor=="eleave"?"true":""}`} onClick={()=>{handleDivChange("eleave")}} >
+    <Link  className='tdash_link' style={{ textDecoration: 'none' }}  to="/admin/employeeleave"> 
+      <span>
+      EMPLOYEE LEAVE
+      </span>
+      </Link>
+    </div>
+      </>
+     ):null}
+    <div  className={`das_con_sidebar_1 ${divColor=="project"?"true":""}`} onClick={handleProject} >
+      <Link  className='tdash_link' style={{ textDecoration: 'none' }} to="/admin/project" >
+       <p><RiProjectorLine/> PROJECTS</p></Link>
+    </div>
+    <div  className={`das_con_sidebar_1 ${divColor=="team"?"true":""}`} onClick={handleTeam} >
+      <Link  className='tdash_link' style={{ textDecoration: 'none' }} to="/admin/team" >
+       <p><RiProjectorLine/> TEAM LEADERS</p></Link>
+    </div>
+   
+  </div>       
+</nav>
+</div>
     {/* Dynamic Content Area */}
-    <div className='ad_outlet'>
+    <div className='das_con_outlet'>
       <Outlet />
     </div>
+      </div>
   </div>
   )
 }

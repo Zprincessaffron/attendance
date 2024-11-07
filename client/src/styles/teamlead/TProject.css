@@ -20,3 +20,33 @@
     text-align: left;
 }
 
+.popup_progress{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    gap: 10px;
+    align-items: center;
+}
+.popup-content>div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-top: 0.3rem;
+}
+.status_popupp.active{
+    color: green;
+    background-color: rgba(168, 231, 168, 0.656);
+    padding: 0px 5px;
+    border-radius: 5px;
+}
+.addproject_btn{
+    padding: 8px 25px;
+    border: none;
+    background-color: rgb(36, 35, 35);
+    color: white;
+    margin-top: 10px;
+    border-radius: 5px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+}

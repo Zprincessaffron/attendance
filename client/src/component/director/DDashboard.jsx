@@ -7,16 +7,19 @@ import { IoHomeOutline } from "react-icons/io5";
 import { SlNote } from "react-icons/sl";
 import { CgNotes } from "react-icons/cg";
 import { RiProjectorLine } from "react-icons/ri";
+import { AiOutlineMail } from "react-icons/ai";
 
 function DDashboard() { 
   const [show,setShow]=useState(false)
   const [showLeave,setShowLeave]=useState(false)
   const [divColor,setDivColor]=useState('home')
+  const [showMail,setShowMail]=useState(false)
+
 
   function handleAttendance(){
     setShow(!show)
     setDivColor("attendance")
-    setShowLeave(false)
+    setShowLeave(false) 
  
   }
   function handleHome(){
@@ -36,6 +39,10 @@ function DDashboard() {
   function handleDivChange(val){
     setDivColor(val)
   }
+  function handleInbox(){
+    setDivColor('email')
+    setShowMail(!showMail)
+  }
   return (
     <div  className='das_containner'>
       <div className='das_containner1'>
@@ -47,7 +54,7 @@ function DDashboard() {
 <nav>
  <div className='das_con_sidebar_main'>
   <div className='das_con_sidebar_title'>
-    <div>TEAMLEAD DASHBOARD</div>
+    <div>DIRECTOR DASHBOARD</div>
 
   </div>
     <div className={`das_con_sidebar_1 ${divColor=="home"?"true":""}`} onClick={handleHome} >
@@ -108,8 +115,28 @@ function DDashboard() {
     </div>
     <div  className={`das_con_sidebar_1 ${divColor=="team"?"true":""}`} onClick={handleTeam} >
       <Link  className='tdash_link' style={{ textDecoration: 'none' }} to="/director/team" >
-       <p><RiProjectorLine/> TEAM MEMBERS</p></Link>
+       <p><RiProjectorLine/> TEAM LEADERS</p></Link>
     </div>
+    <div  className={`das_con_sidebar_1 ${divColor=="profile"?"true":""}`} onClick={()=>{handleDivChange("profile")}} >
+      <Link  className='tdash_link' style={{ textDecoration: 'none' }} to="/director/profile" >
+       <p><RiProjectorLine/> PROFILE</p></Link>
+    </div>
+    <div  className={`das_con_sidebar_1 ${divColor=="email"?"true":""}`} onClick={handleInbox}  >
+    <p><AiOutlineMail/> EMAIL</p>
+    </div>
+    {showMail?(
+      <>
+       <div  className={`das_con_sidebar_1 ${divColor=="inbox"?"true":""}`} onClick={()=>handleDivChange('inbox')}>
+    <Link  className='tdash_link' style={{ textDecoration: 'none' }} to="/director/inbox" >
+    <p> INBOX</p></Link>
+    </div>
+    <div  className={`das_con_sidebar_1 ${divColor=="compose"?"true":""}`}onClick={()=>handleDivChange('compose')}>
+    <Link  className='tdash_link' style={{ textDecoration: 'none' }} to="/director/compose" >
+    <p> Compose</p></Link>
+    
+    </div>
+      </>
+    ):null}
   </div>       
 </nav>
 </div>

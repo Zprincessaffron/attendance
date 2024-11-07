@@ -148,3 +148,51 @@ export const getTodayAttendanceForDevelopment = async (req, res) => {
   }
 }
 
+
+export const getTodayAttendance = async (req, res) => {
+  try {
+      const today = new Date();
+      const startOfDay = new Date(today.setHours(0, 0, 0, 0));
+      const endOfDay = new Date(today.setHours(23, 59, 59, 999));
+
+      const attendances = await Attendance.find({
+          date: {
+              $gte: startOfDay,
+              $lte: endOfDay
+          }
+      });
+
+      res.status(200).json(attendances);
+  } catch (error) {
+      res.status(500).json({ message: error.message });
+  }
+}
+
+export const getEmployeeMonthlyAttendance = async (req, res) => {
+  const { employeeId } = req.params;
+
+  try {
+    // Get the current date and calculate the first and last dates of the current month
+    const currentDate = new Date();
+    const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+
+    // Fetch attendance data for the current month using employeeId
+    const attendanceRecords = await Attendance.find({
+      employeeId,
+      date: {
+        $gte: firstDayOfMonth,
+        $lte: lastDayOfMonth,
+      },
+    });
+
+    if (!attendanceRecords || attendanceRecords.length === 0) {
+      return res.status(404).json({ message: 'No attendance records found for this employee in the current month.' });
+    }
+
+    res.status(200).json({ data: attendanceRecords });
+  } catch (error) {
+    console.error('Error fetching employee attendance:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};

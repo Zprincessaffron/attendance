@@ -6,26 +6,61 @@ import { FaRegCalendar } from "react-icons/fa";
 import '../../styles/director/DProject.css'
 import axios from 'axios';
 import moment from 'moment';
+import ShiningText from '../text/ShiningText';
+import ProgressBar from '../bar/ProgressBar';
+import ProjectPopupForm from '../teamLead/ProjectPopupForm';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { toast } from 'react-toastify';
+
 function DProject() {
   const { projects } = useContext(EmployeeContext)
   const [popup, setPopup] = useState(false)
   const [currentItem, setCurrentItem] = useState()
   const [sortedProjects, setSortedProjects] = useState([])
   const [selectedValue, setSelectedValue] = useState('All');
+  const [showProjectForm, setShowProjectForm] = useState(false)
+  const [showNormal, setShowNormal] = useState(true)
+  const [formData, setFormData] = useState({
+    status: '',
+    progress: 0,
+    endDate: new Date()
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleDateChange = (date) => {
+    setFormData({ ...formData, endDate: date });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(`/project/${currentItem._id}`, formData);
+      toast('project updated ')
+      setShowNormal(true)
+      setPopup(false)
+    } catch (error) {
+      console.error('There was an error submitting the data!', error);
+    }
+  };
 
   // Function to handle radio button change
   const handleRadioChange = (event) => {
     setSelectedValue(event.target.value)
     const values = event.target.value.toLowerCase()
-   if(values == 'all'){ 
-    setSortedProjects(projects)
-    console.log("projects",projects)
-   }else{
-    const filterProjectsByDepartment = projects.filter(project => project.department === values);
-    setSortedProjects(filterProjectsByDepartment)
-   }
+    if (values == 'all') {
+      setSortedProjects(projects)
+      console.log("projects", projects)
+    } else {
+      const filterProjectsByDepartment = projects.filter(project => project.department === values);
+      setSortedProjects(filterProjectsByDepartment)
+    }
 
-  
+
   };
 
 
@@ -40,61 +75,106 @@ function DProject() {
 
   }, [])
 
-
-
-
   return (
     <div>
+      {showProjectForm ? (<ProjectPopupForm setShowProjectForm={setShowProjectForm} />) : null}
       {popup ? (
         <>
-          <div className='e_leavereq_pop'>
-            <div className='e_leavereq_pop_1'>
-              <div className='e_leavereq_pop_2'>
-                <h5>{currentItem.projectName}</h5>
-                <div className='t_project_pop21'>
-                  <div >
-                    <span>Created By:</span> <span>{currentItem.createdBy}</span>
-                  </div>
-                  <div >
-                    <span>Created:</span> <span><FaRegCalendar /> {currentItem.createdDate.split('T')[0]}</span>
-                  </div>
+          <div className="popup-overlay">
+            {showNormal ? (
+              <>
+                <div className="popup-container">
 
-                  <div>
-                    <span>Started:</span> <span><FaRegCalendar /> {currentItem.startDate.split('T')[0]}</span>
+                  <h2 className="popup-title">{currentItem.projectName}</h2>
+                  <div className="popup-content">
+                    <div>
+                      <span>Created By:</span> <span>{currentItem.createdBy}</span>
+                    </div>
+                    <div>
+                      <span>Created:</span> <span><FaRegCalendar /> {currentItem.createdDate.split('T')[0]}</span>
+                    </div>
+
+                    <div>
+                      <span>Started:</span> <span><FaRegCalendar /> {currentItem.startDate.split('T')[0]}</span>
+                    </div>
+                    <div>
+                      <span>Deadline:</span> <span><FaRegCalendar /> {currentItem.deadlineDate.split('T')[0]}</span>
+                    </div>
+                    <div>
+                      <span>EndDate:</span> <span> {currentItem.endDate ? (<> <FaRegCalendar /> currentItem.endDate.split('T')[0] </>) : "Not completed"}</span>
+                    </div>
+                    <div>
+                      <span>Status:</span> <span className={`status_popupp ${currentItem.status}`}>{currentItem.status}</span>
+                    </div>
+                    <div className='popup_progress'>
+                      <span>Progress:</span> <span> <ProgressBar value={currentItem.progress} /> </span>
+                    </div>
                   </div>
-                  <div>
-                    <span>Deadline:</span> <span><FaRegCalendar /> {currentItem.deadlineDate.split('T')[0]}</span>
-                  </div>
-                  <div>
-                    <span>EndDate:</span> <span> {currentItem.endDate ? (<> <FaRegCalendar /> currentItem.endDate.split('T')[0] </>) : "Not completed"}</span>
-                  </div>
-                  <div>
-                    <span>Status:</span> <span>{currentItem.status}</span>
-                  </div>
-                  <div>
-                    <span>Progress:</span> <span><div className="progress-bar-container">
-                      <div
-                        className="progress-bar"
-                        style={{ width: `${currentItem.progress}%` }}
-                      ></div>
-                    </div></span>
-                  </div>
-                  <div>
-                    <span>Team Members:</span> <span>{currentItem.teamMembers.join(', ')}</span>
+                  <div className='popup_bottomm'>
+                    <button className="popup-close-button" onClick={() => setPopup(false)}>Close</button>
+                   {currentItem.status != 'completed' ?( <button className="popup-update-button" onClick={() => setShowNormal(false)}>Update</button>):null}
                   </div>
                 </div>
+              </>
+            )
+          :(
+            <>
+              <div className="project-form-container">
+                <form onSubmit={handleSubmit} className="employee-form">
+                  {/* Status Selector */}
+                  <label htmlFor="status">Status:</label>
+                  <select name="status" value={formData.status} onChange={handleInputChange} className="input-select">
+                    <option value="active">active</option>
+                    <option value="completed">completed</option>
+                    <option value="pending">pending</option>
+                  </select>
+
+                  {/* Progress Bar */}
+                  <label htmlFor="progress">Progress:</label>
+                  <input
+                    type="range"
+                    name="progress"
+                    min="0"
+                    max="100"
+                    value={formData.progress}
+                    onChange={handleInputChange}
+                    className="input-range"
+                  />
+                  <span>{formData.progress}%</span>
+
+                  {/* End Date Picker */}
+                  <label htmlFor="endDate">End Date:</label>
+                  <DatePicker
+                    selected={formData.endDate}
+                    onChange={handleDateChange}
+                    className="input-datepicker"
+                  />
+                  <div className='popup_bottomm'>
+                  <button type="submit" className="popup-update-button">update</button>
+                  <button type="button" className="popup-close-button" onClick={()=>setShowNormal(true)}>cancel</button>
+                    </div>
+
+                 
+                </form>
               </div>
-              <div className='e_leavereq_pop_3'>
-                <button className='e_leavereq_pop_33' onClick={() => setPopup(false)} >Close</button>
-              </div>
-            </div>
+            </>
+          )}
+
+
           </div>
+
+
         </>
       ) : null}
 
       <div className='outlet_title'>
         <div>
-          Projects
+          <ShiningText text="Projects" />
+        </div>
+        <div>
+          <button className='addproject_btn' onClick={() => setShowProjectForm(true)}>
+            New Project
+          </button>
         </div>
 
 
@@ -171,12 +251,7 @@ function DProject() {
                   {item.endDate ? item.endDate.split("T")[0] : "-"}
                 </td>
                 <td>
-                  <div className="progress-bar-container">
-                    <div
-                      className="progress-bar"
-                      style={{ width: `${item.progress}%` }}
-                    ></div>
-                  </div>
+                  <ProgressBar value={item.progress} />
                 </td>
                 <td><p className={`table_status ${item.status}`}>{item.status}</p></td>
               </tr>

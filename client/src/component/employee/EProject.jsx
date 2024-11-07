@@ -25,15 +25,14 @@ console.log(projects)
     <div>
       {popup?(
         <>
-        <div className='e_leavereq_pop'>
-          <div className='e_leavereq_pop_1'>
-            <div className='e_leavereq_pop_2'>
-                <h5>{currentItem.projectName}</h5>
-                <div className='t_project_pop21'>
-                <div >
+        <div className="popup-overlay">
+      <div className="popup-container">
+        <h2 className="popup-title">{currentItem.projectName}</h2>
+        <div className="popup-content">
+        <div>
                   <span>Created By:</span> <span>{currentItem.createdBy}</span>
                 </div>
-                <div >
+                <div>
                   <span>Created:</span> <span><FaRegCalendar/> {currentItem.createdDate.split('T')[0]}</span>
                 </div>
                
@@ -47,29 +46,18 @@ console.log(projects)
                   <span>EndDate:</span> <span> {currentItem.endDate? ( <> <FaRegCalendar/> currentItem.endDate.split('T')[0] </>):"Not completed"}</span>
                 </div>
                 <div>
-                  <span>Status:</span> <span>{currentItem.status}</span>
+                  <span>Status:</span> <span className={`status_popupp ${currentItem.status}`}>{currentItem.status}</span>
                 </div>
-                <div>
-                  <span>Progress:</span> <span><div className="progress-bar-container">
-                          <div
-                            className="progress-bar"
-                            style={{ width: `${currentItem.progress}%` }}
-                          ></div>
-                        </div></span>
+                <div className='popup_progress'>
+                  <span>Progress:</span> <span> <ProgressBar value={currentItem.progress}/> </span>
                 </div>
-                <div>
-                  <span>Team Members:</span> <span>{currentItem.teamMembers.join(', ')}</span>
-                </div>
-                </div>
-            </div>
-            <div className='e_leavereq_pop_3'>
-     
-                         <button className='e_leavereq_pop_33' onClick={()=>setPopup(false)} >Close</button>
-
-            
-            </div>
-          </div>
         </div>
+        <div className='popup_bottomm'>
+        <button className="popup-close-button" onClick={()=>setPopup(false)}>Close</button>
+        </div>
+      </div>
+    </div>
+       
         </>
       ):null}
 

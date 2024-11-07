@@ -13,10 +13,10 @@ import ProgressBar from '../bar/ProgressBar';
 
 
 function EHome() {
-  const { allEmployeesData, setAllEmployeesData,loading,setLoading,projects, setProjects, employeeData, teamMembers, setTeamMembers, teamMembersData, setTeamMembersData } = useContext(EmployeeContext)
+  const { activeProjects,setActiveProjects,allEmployeesData,setLeaveData,leaveData, setAllEmployeesData,loading,setLoading,projects, setProjects, employeeData, teamMembers, setTeamMembers, teamMembersData, setTeamMembersData,thisMonthAttendance,setThisMonthAttendance } = useContext(EmployeeContext)
   const [ getData , setGetData]=useState(false)
-  const [activeProject,setActiveProject]=useState([])
-  
+  const today = new Date();
+  const day = today.getDate();
 
   async function getProjects() {
     console.log("opening function1");
@@ -64,7 +64,7 @@ function EHome() {
   
         // Check if there are any active projects
         if (activeProjects.length > 0) {
-          setActiveProject(activeProjects)
+          setActiveProjects(activeProjects)
           const teamMembersList = activeProjects[0].teamMembers;
           setTeamMembers(teamMembersList);
           console.log("Team members:", teamMembersList);
@@ -132,16 +132,43 @@ function EHome() {
     }
 
   }
-  
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`/leave/get/${employeeData.employeeId}`);
+      setLeaveData(response.data)
+      console.log(response.data)
+
+    } catch (err) {
+
+      console.log(err)
+    }
+
+  };
+  const getthisMonthAttendance = async () => {
+    try {
+      const response = await axios.get(`/attendance/thismonth/${employeeData.employeeId}`);
+      setThisMonthAttendance(response.data.data)
+      console.log(response.data)
+
+    } catch (err) {
+
+      console.log(err)
+    }
+
+  };
   // useEffect to initiate the process
   useEffect(() => {
     setTimeout(() => {
       if(loading == true){
         getProjects();
         getAllemployeesData()
+       
         
       }
     }, 2000);
+    fetchData()
+    getthisMonthAttendance()
+
   }, [getData]);
   
 
@@ -163,10 +190,10 @@ function EHome() {
         <div className='thome_div1'>
           <div className='thome_div11'>
             <div className='thome_div111'>
-              Leave Request
+              Leave Requested
             </div>
             <div className='thome_div112'>
-              <p>0</p>
+              <p>{leaveData.length}</p>
               <div><FaTicket /></div>
             </div>
 
@@ -174,20 +201,23 @@ function EHome() {
 
           <div className='thome_div11 second'>
             <div className='thome_div111'>
-              Today Presents
+              This Month
             </div>
             <div className='thome_div112'>
-              <p>0</p>
+              <p>{thisMonthAttendance.length} / {today.getDate()}</p>
               <div><IoPerson /></div>
+            </div>
+            <div className='thome_div113'>
+            Toal Percentage : {Math.round((thisMonthAttendance.length / today.getDate()) * 100)}%
             </div>
 
           </div>
           <div className='thome_div11 third'>
             <div className='thome_div111'>
-              Total Projects
+              {activeProjects[0].projectName}
             </div>
             <div className='thome_div112'>
-              <p>0</p>
+              <p style={{fontSize:"1rem"}}>{activeProjects[0].startDate.split('T')[0]}</p>
               <div><RiProjectorLine /></div>
             </div>
 
@@ -242,7 +272,7 @@ function EHome() {
                   </tr>
                 </thead>
                 <tbody>
-                  {activeProject.map((project) => (
+                  {activeProjects.map((project) => (
                     <tr key={project.id}>
                       <td>{project.projectName}</td>
                       <td>{project.startDate.split("T")[0]}</td>

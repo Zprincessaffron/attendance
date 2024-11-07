@@ -4,6 +4,8 @@ import axios from 'axios';
 import moment from 'moment';
 import ShiningText from '../text/ShiningText';
 import '../../styles/employee/ELeave.css'
+import { toast } from 'react-toastify';
+
 function ELeave() {
   const { leaveData, setLeaveData, employeeData } = useContext(EmployeeContext)
   const [popup, setPopup] = useState(false)
@@ -88,10 +90,13 @@ function ELeave() {
         leaveType
       });
       console.log(response.data)
+      toast("Request Created")
+      setPopupLeave(false)
 
     } catch (err) {
+      toast(err.response.data.message)
+      
 
-      console.log(err)
       console.log(err)
     }
 
@@ -111,21 +116,22 @@ function ELeave() {
     <div>
       {popup ? (
         <>
-          <div className='e_leavereq_pop'>
-            <div className='e_leavereq_pop_1'>
-              <div className='e_leavereq_pop_2'>
-                <h5>Reason</h5>
-                <p>
-                  {leaveReason.leaveReason}</p>
-              </div>
-              <div className='e_leavereq_pop_3'>
-
-                <button className='e_leavereq_pop_33' onClick={() => setPopup(false)} >Close</button>
-
-
-              </div>
-            </div>
-          </div>
+          <div className="popup-overlay">
+      <div className="popup-container">
+        <h2 className="popup-title">Leave Details</h2>
+        <div className="popup-content">
+          <p><strong>Leave Type:</strong> {leaveReason.leaveType}</p>
+          <p><strong>Leave Reason:</strong> {leaveReason.leaveReason}</p>
+          <p><strong>Status:</strong> {leaveReason.leaveStatus}</p>
+          <p><strong>Request Date:</strong> {new Date(leaveReason.requestDate).toLocaleDateString()}</p>
+          <p><strong>From Date:</strong> {new Date(leaveReason.fromDate).toLocaleDateString()}</p>
+          <p><strong>To Date:</strong> {new Date(leaveReason.toDate).toLocaleDateString()}</p>
+        </div>
+        <div className='popup_bottomm'>
+        <button className="popup-close-button" onClick={()=>setPopup(false)}>Close</button>
+        </div>
+      </div>
+    </div>
 
         </>
       ) : null}

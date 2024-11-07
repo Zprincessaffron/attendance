@@ -130,3 +130,40 @@ export const getProjectsByDepartment = async (req, res) => {
     res.status(500).json({ message: 'Error retrieving projects by department', error });
   }
 };
+
+export const updateProject = async (req, res) => {
+  const { id } = req.params;
+  const { progress, status, endDate } = req.body;
+
+  try {
+    // Validate progress (if provided, should be between 0 and 100)
+    if (progress !== undefined && (progress < 0 || progress > 100)) {
+      return res.status(400).json({ message: 'Progress should be between 0 and 100.' });
+    }
+
+    // Build update object with the fields provided in the request body
+    const updateFields = {};
+    if (progress !== undefined) updateFields.progress = progress;
+    if (status !== undefined) updateFields.status = status;
+    if (endDate !== undefined) updateFields.endDate = new Date(endDate);
+
+    // Update project
+    const updatedProject = await Project.findByIdAndUpdate(
+      id,
+      { $set: updateFields },
+      { new: true } // returns the updated document
+    );
+
+    if (!updatedProject) {
+      return res.status(404).json({ message: 'Project not found' });
+    }
+
+    res.json({
+      message: 'Project updated successfully',
+      project: updatedProject,
+    });
+  } catch (error) {
+    console.error('Error updating project:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}

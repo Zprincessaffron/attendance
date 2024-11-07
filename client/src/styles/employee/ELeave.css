@@ -1,3 +1,6 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500,700);
+
+
 /* src/LeaveForm.css */
 .leave-form-container {
     width: fit-content;
@@ -35,6 +38,7 @@
   }
   
   .leave-form-group {
+	width: 90%;
     margin-bottom: 15px;
     animation: leave-fadeIn 1s ease-in-out;
   }
@@ -100,7 +104,6 @@
 
   /* ///radio button in leave////////// */
 
-  @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500,700);
 
 
 .continput {
@@ -108,7 +111,7 @@
 	width: fit-content;
 	height: fit-content;
 	padding: 0px;
-    width: 80%;
+    width: 100%;
  
 
 }
@@ -509,4 +512,86 @@
 
 
 
+
+
+
+
+
+
+
+
+
+  .popup-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.6);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+  }
+  
+  .popup-container {
+	background: #ffffff;
+	padding: 2rem;
+	width: 80%;
+	max-width: 400px;
+	border-radius: 8px;
+	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+	animation: fadeIn 0.3s ease;
+  }
+  
+  .popup-title {
+	font-size: 1.5rem;
+	font-weight: 400;
+	letter-spacing: 0.5px;
+	margin-bottom: 1rem;
+	color: #333;
+	text-align: center;
+  }
+  
+  .popup-content {
+	font-size: 1rem;
+	line-height: 1.6;
+	color: #555;
+  }
+  
+  .popup-content p {
+	margin: 0.5rem 0;
+  }
+  
+  .popup-close-button,.popup-update-button {
+	margin-top: 1.5rem;
+	padding: 7px 25px;
+	background: #3c3a3a;
+	color: #ffffff;
+	font-weight: 400;
+	border: none;
+	border-radius: 20px;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+  }
+  
+  .popup-close-button:hover {
+	background: #9f6f6f;
+  }
+  .popup-update-button:hover{
+	background-color: rgb(73, 114, 73);
+  }
+  .popup_bottomm{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+
+  }
+  
+  @keyframes fadeIn {
+	from { opacity: 0; }
+	to { opacity: 1; }
+  }
+  
   

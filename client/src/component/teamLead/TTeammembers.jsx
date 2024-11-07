@@ -8,6 +8,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { MdOutlineCall } from "react-icons/md";
 import { IoMailOutline } from "react-icons/io5";
+import ShiningText from '../text/ShiningText';
 
 function TTeammembers() {
   const { teamMembersData }=useContext(EmployeeContext)
@@ -61,10 +62,7 @@ function handlePopup(item){
             </div>
             <div className='e_leavereq_pop_3'>
            
-                         <button className='e_leavereq_pop_33' onClick={()=>setPopup(false)} >Close</button>
-
-                 
-             
+               <button className='e_leavereq_pop_33' onClick={()=>setPopup(false)} >Close</button>
             </div>
           </div>
         </div>
@@ -73,7 +71,7 @@ function handlePopup(item){
 
       <div className='outlet_title'>
         <div>
-          Projects
+          <ShiningText text="Teams"/>
         </div>
        
         

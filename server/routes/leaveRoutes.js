@@ -21,10 +21,9 @@ router.put('/update/:leaveId', updateLeaveStatusById);
 
 // Get all leave requests for a specific employee
 router.get('/get/:employeeId', getEmployeeLeaveRequests);
-
 router.get('/approved', getAllApprovedLeaveRequests);
 router.get('/all', getAllLeaveRequests);
-router.get('/pendinng', getAllPendingLeaveRequests);
+router.get('/pending', getAllPendingLeaveRequests);
 router.get('/rejected', getAllRejectedLeaveRequests);
 router.get('/fromdev', getLeaveFromDevelopment);
 

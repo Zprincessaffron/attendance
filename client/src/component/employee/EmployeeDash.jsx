@@ -80,7 +80,7 @@ function EmployeeDash() {
     
     <div  className={`das_con_sidebar_1 ${divColor=="project"?"true":""}`} onClick={handleProject} >
       <Link  className='tdash_link' style={{ textDecoration: 'none' }} to="/employee/projects" >
-       <p><RiProjectorLine/> PROJECTS</p></Link>
+       <p><RiProjectorLine/> PROJECTS</p></Link> 
     </div>
     <div  className={`das_con_sidebar_1 ${divColor=="team"?"true":""}`} onClick={handleTeam} >
       <Link  className='tdash_link' style={{ textDecoration: 'none' }} to="/employee/teams" >

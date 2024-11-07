@@ -1,5 +1,5 @@
 import express from 'express';
-import { createEmployee, getAllEmployees, getEmployeeById, updateLeavesTaken, getEmployeeFromDev } from '../controllers/employeeController.js';
+import { createEmployee, getAllEmployees, getEmployeeById, updateLeavesTaken, getEmployeeFromDev, getTeamLeadDetails,getAllEmployeeFilterData } from '../controllers/employeeController.js';
 
 const router = express.Router();
 
@@ -16,6 +16,10 @@ router.get('/filter/:employeeId', getEmployeeById);
 router.put('/leaves/:employeeId', updateLeavesTaken);
 //get all employee data of development
 router.get('/fromdev', getEmployeeFromDev);
+router.get('/teamlead', getTeamLeadDetails);
+router.get('/allfiltered',getAllEmployeeFilterData );
+
+
 
 
 

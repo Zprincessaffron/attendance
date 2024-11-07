@@ -76,6 +76,13 @@ function TeamLeadDash() {
       </span>
       </Link>
     </div>
+    <div  className={`das_con_sidebar_1 ${divColor=="myattendance"?"true":""}`} onClick={()=>{handleDivChange("myattendance")}} >
+      <Link  className='tdash_link' style={{ textDecoration: 'none' }}  to="/tl/myattendance"> 
+      <span>
+      MY ATTENDANCE
+      </span>
+      </Link>
+    </div>
       </>
      ):null}
 
@@ -97,6 +104,13 @@ function TeamLeadDash() {
     <Link  className='tdash_link' style={{ textDecoration: 'none' }}  to="/tl/employeeleave"> 
       <span>
       EMPLOYEE LEAVE
+      </span>
+      </Link>
+    </div>
+    <div  className={`das_con_sidebar_1 ${divColor=="myleave"?"true":""}`} onClick={()=>{handleDivChange("myleave")}} >
+    <Link  className='tdash_link' style={{ textDecoration: 'none' }}  to="/tl/myleave"> 
+      <span>
+      MY LEAVE
       </span>
       </Link>
     </div>

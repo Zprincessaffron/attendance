@@ -28,7 +28,7 @@ const generateEmployeeId = (department) => {
   // Create a new employee
   export const createEmployee = async (req, res) => {
     try {
-      const { name, email, phone, dateOfBirth, gender, address, maritalStatus, department, role, dateOfJoining, bankAccount, Ifsc } = req.body;
+      const { name, email, phone, dateOfBirth, gender, address, maritalStatus, department, role, dateOfJoining, bankAccount, Ifsc , position, city, pincode, aadhar, pan ,bankName } = req.body;
   
       // Validate input
       if (!name || !email || !department || !role || !dateOfJoining) {
@@ -52,11 +52,17 @@ const generateEmployeeId = (department) => {
         bankAccount,
         employeeId,
         Ifsc,
+        position,
+        bankName,
+        aadhar,
+        pan,
+        pincode,
+        city,
         leavesTaken: 0 // Initialize leaves taken as 0
       });
   
       const savedEmployee = await newEmployee.save();
-      res.status(201).json({ message :`Employee created successfully ${employeeId}`});
+      res.status(201).json({ message :`Employee created successfully ${employeeId}`, data:newEmployee});
     } catch (error) {
       console.error('Error creating employee:', error);
       res.status(500).json({ message: 'Error creating employee', error: error.message });
@@ -67,6 +73,15 @@ const generateEmployeeId = (department) => {
 export const getAllEmployees = async (req, res) => {
   try {
     const employees = await Employee.find();
+    res.status(200).json(employees);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching employees', error });
+  }
+};
+export const getAllEmployeeFilterData = async (req, res) => {
+
+  try {
+    const employees = await Employee.find({},`name email role department`);
     res.status(200).json(employees);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching employees', error });
@@ -114,6 +129,24 @@ export const getEmployeeFromDev = async (req, res) => {
   try {
       // Regex to match the third letter being 'D'
       const employees = await Employee.find({ employeeId: /^.{2}D/ });
+
+      // If no employees found, return a message
+      if (employees.length === 0) {
+          return res.status(404).json({ message: 'No employees found with third letter "D" in employeeId' });
+      }
+
+      // Return the filtered employee data
+      res.status(200).json(employees);
+  } catch (error) {
+      res.status(500).json({ message: 'Error fetching employees', error });
+  }
+}
+
+//get employee details from development
+export const getTeamLeadDetails = async (req, res) => {
+  try {
+      // Regex to match the third letter being 'D'
+      const employees = await Employee.find({ position:"teamlead"});
 
       // If no employees found, return a message
       if (employees.length === 0) {

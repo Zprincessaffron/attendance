@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { EmployeeContext } from '../../context/EmployeeContext'
-import '../../styles/teamlead/TLeaveRequest.css'
+import '../../styles/teamlead/TLeaveRequest.css' 
 import axios from 'axios';
 import moment from 'moment';
 import { FaTicket } from "react-icons/fa6";
@@ -8,11 +8,15 @@ import '../../styles/teamlead/THome.css'
 import { RiProjectorLine } from "react-icons/ri";
 import { IoPerson } from "react-icons/io5";
 import Loader from '../loader/Loader';
-
+import ShiningText from '../text/ShiningText';
+import ProgressBar from '../bar/ProgressBar';
+import { Tooltip } from 'react-tooltip'
 
 function DHome() {
-  const { loading,setLoading,projects, setProjects, employeeData, teamMembers, setTeamMembers, teamMembersData, setTeamMembersData } = useContext(EmployeeContext)
+  const { setTodayAttendance, TodayAttendance,pendingLeave,setPendingLeave,setMydetail,activeProjects,setActiveProjects,allEmployeesData, setAllEmployeesData,loading,setLoading,projects, setProjects, employeeData, teamMembers, setTeamMembers, teamMembersData, setTeamMembersData } = useContext(EmployeeContext)
   const [ getData , setGetData]=useState(false)
+
+
   
 
   async function getProjects() {
@@ -42,7 +46,6 @@ function DHome() {
   }
 
 
-  
   async function setTeamMembersFunc(project) {
     
     if(projects.length = 0 ){
@@ -57,13 +60,11 @@ function DHome() {
         console.log("projects",project)
         const activeProjects = project.filter(project => project.status === 'active');
         console.log("active projects",activeProjects)
-  
         // Check if there are any active projects
         if (activeProjects.length > 0) {
-          const teamMembersList = activeProjects[0].teamMembers;
-          setTeamMembers(teamMembersList);
-          console.log("Team members:", teamMembersList);
-          getEmployeesData(teamMembersList); 
+          setActiveProjects(activeProjects)
+          
+          getEmployeesData(); 
         } else {
           console.log("No active projects found.");
           retries++;
@@ -76,15 +77,10 @@ function DHome() {
         console.log(`Retrying setTeamMembersFunc due to error: Attempt ${retries}`);
         await new Promise(resolve => setTimeout(resolve, 1000)); // Wait before retrying
       }
-    
     }
-    
-    
-  }
-  
-  async function getEmployeesData(teamMembers) {
+  } 
+  async function getEmployeesData() {
     console.log("opening function3");
-    console.log("Team members:", teamMembers);
   
     // Attempt to fetch employees data with retry logic
     const maxRetries = 5; // Maximum number of retries
@@ -92,14 +88,14 @@ function DHome() {
   
     while (retries < maxRetries) {
       try {
-        const response = await axios.get(`/employee/fromdev`);
+        const response = await axios.get(`/employee/teamlead`);
         console.log(response.data);
         const employees = response.data;
+        const employeeIds = employees.map(employees => employees.employeeId);
+        setTeamMembers(employeeIds)
   
         // Filter employees based on teamMembers
-        // const filtered = employees.filter(employee => teamMembers.includes(employee.employeeId));
-        setTeamMembersData(employees);
-        console.log("Filtered team members data:", filtered);
+       setTeamMembersData(employees)
         break; // Exit loop on success
       } catch (error) {
         console.error("Error in getEmployeesData:", error);
@@ -112,16 +108,68 @@ function DHome() {
           setGetData(true)
         }else{
           setLoading(false); 
-        }
+        } 
       }
     }
   }
   
+  async function getAllemployeesData(){
+    try {
+      const response = await axios.get(`/employee/all`);
+      setAllEmployeesData(response.data);
+    } catch (error) {
+      console.error("Error:", error);
+     
+    }
+
+  }
+  async function getMyDetail(){
+    try {
+      const response = await axios.get(`/employee/filter/${employeeData.employeeId}`);
+      setMydetail(response.data);
+    } catch (error) {
+      console.error("Error:", error);
+     
+    }
+
+  }
+  async function getPendingLeaveData(){
+    try {
+      const response = await axios.get(`/leave/pending`);
+      const employees = response.data.data
+      setPendingLeave(employees)
+
+      
+    } catch (err) {
+
+      console.log(err)
+      console.log(err)
+    }
+  }
+
+  async function getTodayAttendanceData(){
+    try {
+      const response = await axios.get(`/attendance/today/all`);
+      const employees = response.data
+
+      setTodayAttendance(employees)
+      
+      
+    } catch (err) {
+
+      console.log(err)
+      console.log(err)
+    }
+  }
   // useEffect to initiate the process
   useEffect(() => {
     setTimeout(() => {
       if(loading == true){
         getProjects();
+        getAllemployeesData()
+        getMyDetail()
+        getTodayAttendanceData()
+        getPendingLeaveData()
       }
     }, 2000);
   }, [getData]);
@@ -131,7 +179,8 @@ function DHome() {
     <div>
       <div className='outlet_title'>
         <div>
-          Home
+          <ShiningText text="Home"/>
+
         </div>
 
 
@@ -150,7 +199,7 @@ function DHome() {
               Leave Request
             </div>
             <div className='thome_div112'>
-              <p>0</p>
+            <p>{pendingLeave.length}</p>
               <div><FaTicket /></div>
             </div>
 
@@ -161,17 +210,17 @@ function DHome() {
               Today Presents
             </div>
             <div className='thome_div112'>
-              <p>0</p>
-              <div><IoPerson /></div>
+            <p>{TodayAttendance.length} / {allEmployeesData.length}</p>
+            <div><IoPerson /></div>
             </div>
 
           </div>
           <div className='thome_div11 third'>
             <div className='thome_div111'>
-              Total Projects
+              Active Projects
             </div>
             <div className='thome_div112'>
-              <p>0</p>
+              <p>{activeProjects.length}</p>
               <div><RiProjectorLine /></div>
             </div>
 
@@ -182,14 +231,14 @@ function DHome() {
         <div className='thome_div2'>
           <div className='thome_div21'>
             <div className="thome-table-container">
-              <h2 className="thome-title">My Team</h2>
+              <h2 className="thome-title">TEAM leaders</h2>
               <table className="thome-team-table">
                 <thead>
                   <tr>
                     <th>#</th>
                     <th>Employee Name</th>
-                    <th>Employee Id</th>
-                  </tr>
+                    <th >Employee Id</th>
+                                     </tr>
                 </thead>
                 <tbody>
                   {teamMembersData.map((employee, index) => (
@@ -201,7 +250,7 @@ function DHome() {
                         <small className="thome-employee-role">{employee.role}</small>
                       </td>
                       <td>
-                        <span className={`thome-status thome-`}>
+                        <span style={{cursor:"pointer"}} className={`thome-status thome-`} data-tooltip-id="my-tooltip" data-tooltip-content={employee.name}>
                           {employee.employeeId}
                         </span>
                       </td>
@@ -226,20 +275,25 @@ function DHome() {
                   </tr>
                 </thead>
                 <tbody>
-                  {projects.map((project) => (
+                {activeProjects.map((project) => (
                     <tr key={project.id}>
                       <td>{project.projectName}</td>
                       <td>{project.startDate.split("T")[0]}</td>
                       <td>{project.endDate ? project.endDate.split("T")[0] : "-"}</td>
                       <td>
-                        <div className="progress-bar-container">
+                        {/* <div className="progress-bar-container">
                           <div
                             className="progress-bar"
                             style={{ width: `${project.progress}%` }}
-                          ></div>
-                        </div>
+                          >
+                            
+                          </div>
+                        </div> */}
+                        <ProgressBar value={project.progress}/>
+
+                        
                       </td>
-                      <td>{project.status}</td>
+                      <td><p className={`table_status ${project.status}`}>{project.status}</p></td>
                     </tr>
                   ))}
                 </tbody>

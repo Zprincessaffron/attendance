@@ -79,7 +79,6 @@ export const loginAuthEmployee = async (req, res) => {
 export const forgotPassword = async (req, res) => {
     try {
       const { email } = req.body;
-  
       // Find authEmployee by email
       const authEmployee = await AuthEmployee.findOne({ email });
       if (!authEmployee) {

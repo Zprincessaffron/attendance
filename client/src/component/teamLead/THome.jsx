@@ -12,15 +12,13 @@ import ShiningText from '../text/ShiningText';
 import ProgressBar from '../bar/ProgressBar';
 
 function THome() {
-  const { allEmployeesData, setAllEmployeesData,loading,setLoading,projects, setProjects, employeeData, teamMembers, setTeamMembers, teamMembersData, setTeamMembersData } = useContext(EmployeeContext)
+  const { pendingLeave,setPendingLeave,TodayAttendance,setTodayAttendance,activeProjects,setActiveProjects,allEmployeesData, setAllEmployeesData,loading,setLoading,projects, setProjects, employeeData, teamMembers, setTeamMembers, teamMembersData, setTeamMembersData } = useContext(EmployeeContext)
   const [ getData , setGetData]=useState(false)
-  const [activeProject,setActiveProject]=useState([])
-
 
   async function getProjects() {
     console.log("opening function1");
   
-    // Attempt to fetch projects with retry logic
+    // Attempt to fetch projects with retry logic 
     const maxRetries = 5; // Maximum number of retries
     let retries = 0;
   
@@ -59,10 +57,11 @@ function THome() {
         console.log("projects",project)
         const activeProjects = project.filter(project => project.status === 'active');
         console.log("active projects",activeProjects)
+
   
         // Check if there are any active projects
         if (activeProjects.length > 0) {
-          setActiveProject(activeProjects)
+          setActiveProjects(activeProjects)
           const teamMembersList = activeProjects[0].teamMembers;
           setTeamMembers(teamMembersList);
           console.log("Team members:", teamMembersList);
@@ -83,8 +82,7 @@ function THome() {
     }
     
     
-  }
-  
+  } 
   async function getEmployeesData(teamMembers) {
     console.log("opening function3");
     console.log("Team members:", teamMembers);
@@ -98,11 +96,15 @@ function THome() {
         const response = await axios.get(`/employee/fromdev`);
         console.log(response.data);
         const employees = response.data;
+      
+
   
         // Filter employees based on teamMembers
         const filtered = employees.filter(employee => teamMembers.includes(employee.employeeId));
         setTeamMembersData(filtered);
         console.log("Filtered team members data:", filtered);
+        getTodayAttendanceData()
+        getPendingLeaveData()
         break; // Exit loop on success
       } catch (error) {
         console.error("Error in getEmployeesData:", error);
@@ -130,6 +132,43 @@ function THome() {
     }
 
   }
+  async function getTodayAttendanceData(){
+    try {
+      const response = await axios.get(`/attendance/today/dev`);
+      const employees = response.data
+      const filtered = employees.filter(employee => 
+        teamMembers.includes(employee.employeeId)
+  
+      );
+      setTodayAttendance(filtered)
+      console.log(teamMembers)
+      
+      
+    } catch (err) {
+
+      console.log(err)
+    }
+  }
+  async function getPendingLeaveData(){
+    try {
+      const response = await axios.get(`/leave/pending`);
+      const employees = response.data.data
+      console.log("teamMembers",teamMembers)
+      
+      const filtered = employees.filter(employee =>
+        teamMembers.includes(employee.employeeId)
+  
+      );
+    setPendingLeave(filtered)
+    console.log("filtered",filtered)
+
+      
+    } catch (err) {
+
+      console.log(err)
+      console.log(err)
+    }
+  }
   // useEffect to initiate the process
   useEffect(() => {
     setTimeout(() => {
@@ -145,7 +184,6 @@ function THome() {
     <div>
       <div className='outlet_title'>
         <div>
-          Home
           <ShiningText text="Home"/>
 
         </div>
@@ -166,7 +204,7 @@ function THome() {
               Leave Request
             </div>
             <div className='thome_div112'>
-              <p>0</p>
+              <p>{pendingLeave.length}</p>
               <div><FaTicket /></div>
             </div>
 
@@ -177,17 +215,17 @@ function THome() {
               Today Presents
             </div>
             <div className='thome_div112'>
-              <p>0</p>
+              <p>{TodayAttendance.length}/{teamMembers.length}</p>
               <div><IoPerson /></div>
             </div>
 
           </div>
           <div className='thome_div11 third'>
             <div className='thome_div111'>
-              Total Projects
+              {activeProjects[0].projectName}
             </div>
             <div className='thome_div112'>
-              <p>0</p>
+              <p style={{fontSize:"1rem"}}>{activeProjects[0].startDate.split('T')[0]}</p>
               <div><RiProjectorLine /></div>
             </div>
 
@@ -242,20 +280,25 @@ function THome() {
                   </tr>
                 </thead>
                 <tbody>
-                  {projects.map((project) => (
+                {activeProjects.map((project) => (
                     <tr key={project.id}>
                       <td>{project.projectName}</td>
                       <td>{project.startDate.split("T")[0]}</td>
                       <td>{project.endDate ? project.endDate.split("T")[0] : "-"}</td>
                       <td>
-                        <div className="progress-bar-container">
+                        {/* <div className="progress-bar-container">
                           <div
                             className="progress-bar"
                             style={{ width: `${project.progress}%` }}
-                          ></div>
-                        </div>
+                          >
+                            
+                          </div>
+                        </div> */}
+                        <ProgressBar value={project.progress}/>
+
+                        
                       </td>
-                      <td>{project.status}</td>
+                      <td><p className={`table_status ${project.status}`}>{project.status}</p></td>
                     </tr>
                   ))}
                 </tbody>

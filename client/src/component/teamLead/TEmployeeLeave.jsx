@@ -3,6 +3,7 @@ import { EmployeeContext } from '../../context/EmployeeContext'
 import axios from 'axios';
 import moment from 'moment';
 import { IoMdSearch } from "react-icons/io";
+import ShiningText from '../text/ShiningText';
 function TEmployeeLeave() {
   const { particularEmployeeAttendance,setParticularEmployeeAttendance,AttendanceData,employeeData,teamMembers }=useContext(EmployeeContext)
   const [popup,setPopup]=useState(false)
@@ -46,20 +47,6 @@ function TEmployeeLeave() {
 
   // Generate page numbers for pagination
 
-  async function handleStart(){
-    try {
-      const response = await axios.post(`/attendance/checkin`,{
-        employeeId: employeeData.employeeId
-      });
-      console.log(response.data)
-      
-    } catch (err) {
-
-      console.log(err)
-      console.log(err)
-    }
-  }
-
   useEffect(() => {
     const calculateTotalHoursWorked = () => {
       const currTime = new Date().toLocaleTimeString;
@@ -69,21 +56,7 @@ function TEmployeeLeave() {
     calculateTotalHoursWorked();
     
   }, []);
-  async function handleCheckOut(){
-    try {
-      const response = await axios.post(`/attendance/checkout`,{
-        employeeId: employeeData.employeeId,
-        workDetails: message
-      });
-      console.log(response.data)
-      
-    } catch (err) {
-
-      console.log(err)
-      console.log(err)
-    }
-
-  }
+ 
   function handlePopup(item){
     setLeaveReason(item)
     setPopup(true)
@@ -100,17 +73,29 @@ const handleSelect = (id) => {
     setSelectedId(id);
     setIsOpen(false);
 };
+async function handleUpdateLeave(val) {
+  try {
+    await axios.put(`/leave/update/${leaveReason._id}`, { leaveStatus: val });
+    setPopup(false)
+  } catch (err) {
+    console.log(err)
+  }
+}
   return (
     <div>
       {popup?(
         <>
         <div className='e_leavereq_pop'>
           <div className='e_leavereq_pop_1'>
-            <div className='e_leavereq_pop_2'>
-                <h5>Reason</h5>
-                <p>
-                {leaveReason.leaveReason}</p>
-            </div>
+          <h5 style={{ fontWeight: "400", letterSpacing: "0.5px", fontSize: "1.5rem" }}>Reason</h5>
+              <div className="popup-content">
+                <p><strong>Leave Type:</strong> {leaveReason.leaveType}</p>
+                <p><strong>Leave Reason:</strong> {leaveReason.leaveReason}</p>
+                <p><strong>Status:</strong> {leaveReason.leaveStatus}</p>
+                <p><strong>Request Date:</strong> {new Date(leaveReason.requestDate).toLocaleDateString()}</p>
+                <p><strong>From Date:</strong> {new Date(leaveReason.fromDate).toLocaleDateString()}</p>
+                <p><strong>To Date:</strong> {new Date(leaveReason.toDate).toLocaleDateString()}</p>
+              </div>
             <div className='e_leavereq_pop_3'>
                {leaveReason.leaveStatus == "Pending"?(
                 <>
@@ -134,7 +119,7 @@ const handleSelect = (id) => {
 
       <div className='outlet_title'>
         <div>
-          Employee Leave
+          <ShiningText text="Employee Leave"/>
         </div>
         <div className="dropdown">
             <div className="dropdown-header" onClick={toggleDropdown}>

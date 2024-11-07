@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { EmployeeContext } from '../../context/EmployeeContext'
 import axios from 'axios';
 import moment from 'moment';
+import ShiningText from '../text/ShiningText';
 import DatePickerComponent from './DatePickerComponent';
 function TodayAttendance() {
   const {  teamMembers,TodayAttendance,setTodayAttendance,setAttendanceData,AttendanceData,employeeData }=useContext(EmployeeContext)
@@ -61,7 +62,7 @@ function handlePopup(item){
 
       <div className='outlet_title'>
         <div>
-          Today Attendance
+        <ShiningText  text={`today attendance`}/>
         </div>
         <div className='outlet_div232'>
          <DatePickerComponent/>
@@ -84,7 +85,9 @@ function handlePopup(item){
           </tr>
         </thead>
         <tbody>
-          {TodayAttendance.map((item, index) => (
+          {TodayAttendance.length > 0 ? (
+            <>
+            {TodayAttendance.map((item, index) => (
             <tr key={index}>
               <td>{index+1}</td>
               <td>{item.employeeId}</td>
@@ -116,6 +119,10 @@ function handlePopup(item){
               <td><p  className={`table_status Approved`}>Present</p></td> 
             </tr>
           ))}
+            </>
+          ):<div>
+            No data found
+            </div>}
         </tbody>
       </table>
 

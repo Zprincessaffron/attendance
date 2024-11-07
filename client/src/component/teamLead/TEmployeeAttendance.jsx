@@ -3,6 +3,8 @@ import { EmployeeContext } from '../../context/EmployeeContext'
 import axios from 'axios';
 import moment from 'moment';
 import { IoMdSearch } from "react-icons/io";
+import ShiningText from '../text/ShiningText';
+
 import '../../styles/teamlead/TEmployeeAttendance.css'
 function TEmployeeAttendance() {
   const { teamMembers,particularEmployeeAttendance,setParticularEmployeeAttendance,AttendanceData,employeeData }=useContext(EmployeeContext)
@@ -125,7 +127,7 @@ const handleSelect = (id) => {
 
       <div className='outlet_title'>
         <div>
-          Employee Attendance
+        <ShiningText  text="employee attendance"/>
         </div>
         <div className="dropdown">
             <div className="dropdown-header" onClick={toggleDropdown}>

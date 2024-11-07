@@ -6,117 +6,101 @@ import { FaRegCalendar } from "react-icons/fa";
 
 import axios from 'axios';
 import moment from 'moment';
+import ShiningText from '../text/ShiningText';
+import ProgressBar from '../bar/ProgressBar';
 function TProject() {
-  const {  projects }=useContext(EmployeeContext)
-  const [popup,setPopup]=useState(false)
-  const [currentItem,setCurrentItem]=useState()
+  const { projects } = useContext(EmployeeContext)
+  const [popup, setPopup] = useState(false)
+  const [currentItem, setCurrentItem] = useState()
 
 
 
-function handlePopup(item){
-    setCurrentItem(item) 
+  function handlePopup(item) {
+    setCurrentItem(item)
     setPopup(true)
-}
-console.log(projects)
+  }
+  console.log(projects)
 
   return (
     <div>
-      {popup?(
+      {popup ? (
         <>
-        <div className='e_leavereq_pop'>
-          <div className='e_leavereq_pop_1'>
-            <div className='e_leavereq_pop_2'>
-                <h5>{currentItem.projectName}</h5>
-                <div className='t_project_pop21'>
-                <div >
+          <div className="popup-overlay">
+            <div className="popup-container">
+              <h2 className="popup-title">{currentItem.projectName}</h2>
+              <div className="popup-content">
+                <div>
                   <span>Created By:</span> <span>{currentItem.createdBy}</span>
                 </div>
-                <div >
-                  <span>Created:</span> <span><FaRegCalendar/> {currentItem.createdDate.split('T')[0]}</span>
-                </div>
-               
                 <div>
-                  <span>Started:</span> <span><FaRegCalendar/> {currentItem.startDate.split('T')[0]}</span>
+                  <span>Created:</span> <span><FaRegCalendar /> {currentItem.createdDate.split('T')[0]}</span>
                 </div>
-                <div>
-                  <span>Deadline:</span> <span><FaRegCalendar/> {currentItem.deadlineDate.split('T')[0]}</span>
-                </div>
-                <div>
-                  <span>EndDate:</span> <span> {currentItem.endDate? ( <> <FaRegCalendar/> currentItem.endDate.split('T')[0] </>):"Not completed"}</span>
-                </div>
-                <div>
-                  <span>Status:</span> <span>{currentItem.status}</span>
-                </div>
-                <div>
-                  <span>Progress:</span> <span><div className="progress-bar-container">
-                          <div
-                            className="progress-bar"
-                            style={{ width: `${currentItem.progress}%` }}
-                          ></div>
-                        </div></span>
-                </div>
-                <div>
-                  <span>Team Members:</span> <span>{currentItem.teamMembers.join(', ')}</span>
-                </div>
-                </div>
-            </div>
-            <div className='e_leavereq_pop_3'>
-     
-                         <button className='e_leavereq_pop_33' onClick={()=>setPopup(false)} >Close</button>
 
-            
+                <div>
+                  <span>Started:</span> <span><FaRegCalendar /> {currentItem.startDate.split('T')[0]}</span>
+                </div>
+                <div>
+                  <span>Deadline:</span> <span><FaRegCalendar /> {currentItem.deadlineDate.split('T')[0]}</span>
+                </div>
+                <div>
+                  <span>EndDate:</span> <span> {currentItem.endDate ? (<> <FaRegCalendar /> currentItem.endDate.split('T')[0] </>) : "Not completed"}</span>
+                </div>
+                <div>
+                  <span>Status:</span> <span className={`status_popupp ${currentItem.status}`}>{currentItem.status}</span>
+                </div>
+                <div className='popup_progress'>
+                  <span>Progress:</span> <span> <ProgressBar value={currentItem.progress} /> </span>
+                </div>
+              </div>
+              <div className='popup_bottomm'>
+                <button className="popup-close-button" onClick={() => setPopup(false)}>Close</button>
+              </div>
             </div>
           </div>
-        </div>
-        </>
-      ):null}
 
+        </>
+      ) : null}
       <div className='outlet_title'>
         <div>
-          Projects
+          <ShiningText text="Projects" />
         </div>
-       
-        
+
+
       </div>
       <div className="table-container">
-      <table className="custom-table">
-        <thead>
-          <tr>
-            <th>S1.No</th>
-            <th>Name</th>
+        <table className="custom-table">
+          <thead>
+            <tr>
+              <th>S1.No</th>
+              <th>Name</th>
               <th>Started</th>
               <th>Deadline</th>
               <th>Ended</th>
               <th>progress</th>
               <th>status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {projects.map((item, index) => (
-            <tr key={index} onClick={()=>handlePopup(item)} >
-              <td>{index+1}</td>
-              <td>{item.projectName}</td>
+            </tr>
+          </thead>
+          <tbody>
+            {projects.map((item, index) => (
+              <tr key={index} onClick={() => handlePopup(item)} >
+                <td>{index + 1}</td>
+                <td>{item.projectName}</td>
                 <td>{item.startDate.split('T')[0]}</td>
                 <td>{item.deadlineDate.split('T')[0]}</td>
                 <td>
-                  {item.endDate?item.endDate.split("T")[0]:"-"}
+                  {item.endDate ? item.endDate.split("T")[0] : "-"}
                 </td>
                 <td>
-                <div className="progress-bar-container">
-                          <div
-                            className="progress-bar"
-                            style={{ width: `${item.progress}%` }}
-                          ></div>
-                        </div>
+                  <ProgressBar value={item.progress} />
                 </td>
                 <td><p className={`table_status ${item.status}`}>{item.status}</p></td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
-     
-    </div>
+
+      </div>
     </div>
   )
 }
