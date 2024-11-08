@@ -11,6 +11,10 @@ import EmailBox from '../email/EmailBox';
 import PlusButton from '../button/PlusButton';
 import { EmployeeContext } from '../../context/EmployeeContext';
 import { AiOutlineMail } from "react-icons/ai";
+import { BsPeople } from "react-icons/bs";
+import { FiUser } from "react-icons/fi";
+import { BsInbox } from "react-icons/bs";
+import { TfiWrite } from "react-icons/tfi";
 
 function TeamLeadDash() {
   const [show, setShow] = useState(false)
@@ -21,7 +25,7 @@ function TeamLeadDash() {
 
   function handleAttendance() {
     setShow(!show)
-    setDivColor("attendance")
+    setDivColor("attendance") 
     setShowLeave(false)
 
   }
@@ -132,11 +136,11 @@ function TeamLeadDash() {
               </div>
               <div className={`das_con_sidebar_1 ${divColor == "team" ? "true" : ""}`} onClick={handleTeam} >
                 <Link className='tdash_link' style={{ textDecoration: 'none' }} to="/tl/team" >
-                  <p><RiProjectorLine /> TEAM MEMBERS</p></Link>
+                  <p><BsPeople/> TEAM MEMBERS</p></Link>
               </div>
               <div className={`das_con_sidebar_1 ${divColor == "profile" ? "true" : ""}`} onClick={() => { handleDivChange("profile") }} >
                 <Link className='tdash_link' style={{ textDecoration: 'none' }} to="/tl/profile" >
-                  <p><RiProjectorLine /> PROFILE</p></Link>
+                  <p><FiUser /> PROFILE</p></Link>
               </div>
               <div className={`das_con_sidebar_1 ${divColor == "email" ? "true" : ""}`} onClick={handleInbox}  >
                 <p><AiOutlineMail /> EMAIL</p>
@@ -145,12 +149,12 @@ function TeamLeadDash() {
                 <>
                   <div className={`das_con_sidebar_1 ${divColor == "inbox" ? "true" : ""}`} onClick={() => handleDivChange('inbox')}>
                     <Link className='tdash_link' style={{ textDecoration: 'none' }} to="/tl/inbox" >
-                      <p> INBOX</p></Link>
-                  </div>
+                    <p> <BsInbox/> INBOX</p></Link>
+                    </div>
                   <div className={`das_con_sidebar_1 ${divColor == "compose" ? "true" : ""}`} onClick={() => handleDivChange('compose')}>
                     <Link className='tdash_link' style={{ textDecoration: 'none' }} to="/tl/compose" >
-                      <p> Compose</p></Link>
-                  </div>
+                    <p><TfiWrite/> Compose</p></Link>
+                    </div>
                 </>
               ) : null}
             </div>

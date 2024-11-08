@@ -40,13 +40,14 @@ export const checkOut = async (req, res) => {
   try {
     const { employeeId, workDetails } = req.body;
 
-    // Get today's date in IST at midnight
-    const todayDate = moment().tz('Asia/Kolkata').startOf('day').toDate(); // Get the start of the day in IST
+    // Get today's start and end time in IST
+    const startOfToday = moment().tz('Asia/Kolkata').startOf('day').toDate();
+    const endOfToday = moment().tz('Asia/Kolkata').endOf('day').toDate();
 
     // Find today's attendance record
     const todayAttendance = await Attendance.findOne({
       employeeId,
-      date: todayDate // Compare using the correct IST date (start of the day)
+      date: { $gte: startOfToday, $lte: endOfToday } // Find record within today's date range
     });
 
     if (!todayAttendance) {
@@ -60,7 +61,6 @@ export const checkOut = async (req, res) => {
 
     // Set check-out time (current time in IST)
     const checkOutTime = moment().tz('Asia/Kolkata').toDate(); 
-    
 
     // Calculate total hours worked (using IST times)
     const totalHours = (checkOutTime - todayAttendance.checkInTime) / (1000 * 60 * 60); // Convert ms to hours

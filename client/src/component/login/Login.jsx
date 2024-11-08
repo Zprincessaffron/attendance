@@ -6,6 +6,7 @@ import { EmployeeContext } from '../../context/EmployeeContext';
 import "./Login.css"; 
 import { CiUser } from "react-icons/ci";
 import { TbPasswordMobilePhone } from "react-icons/tb";
+import { Oval } from 'react-loader-spinner';
 
 import Lottie from 'lottie-react';
 import animationData from '../../animation/animation1.json';
@@ -16,12 +17,14 @@ const Login = () => {
   const [password, setPassword] = useState(''); 
   const [error, setError] = useState('');
   const [logged,setLogged] = useState(false)
+  const [loading,setLoading] = useState(false)
   const navigate = useNavigate(); // To navigate after successful login
   console.log(email,password)
+
+
   const handleLogin = async (e) => {
     e.preventDefault();
-    
-
+    setLoading(true)  //seting the loader true
     try {
       // Sending credentials to backend
       const response = await axios.post('/auth/login', {
@@ -48,6 +51,7 @@ const Login = () => {
 
       // Navigate to dashboard or home page after login
       // navigate('/employee/home');
+      setLoading(false) 
       setLogged(!logged)
       setTimeout(() => {
         if(accessCode == 100){
@@ -68,6 +72,8 @@ const Login = () => {
     } catch (err) {
       // Handle errors here (e.g., invalid credentials)
       setError('Invalid credentials, please try again');
+      setLoading(false) 
+
     }
   };
 
@@ -106,9 +112,20 @@ const Login = () => {
                 required
               />
             </div>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {error && <p style={{ color: 'red',fontSize:"0.9rem",fontWeight:"300",letterSpacing:"0.3px" }}>{error}</p>}
             <p className='login_forgetpw' onClick={()=>navigate('/forgot-password')}>forget password?</p>
-            <button type="submit" className="login_btn">Login</button>
+            <button type="submit" className="login_btn">
+            {loading?(<Oval
+               height={20}
+               width={20}
+               color="white"
+               visible={true}
+               ariaLabel="oval-loading"
+               secondaryColor="#4fa94d"
+               strokeWidth={2}
+               strokeWidthSecondary={2}
+             />):('LOGIN')}
+            </button>
           </form>
 
         </div>

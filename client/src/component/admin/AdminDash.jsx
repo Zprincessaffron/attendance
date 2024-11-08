@@ -11,11 +11,15 @@ import { EmployeeContext } from '../../context/EmployeeContext';
 import PlusButton from '../button/PlusButton';
 import EmailBox from '../email/EmailBox';
 import { AiOutlineMail } from "react-icons/ai";
+import { BsPeople } from "react-icons/bs";
+import { FiUser } from "react-icons/fi";
+import { BsInbox } from "react-icons/bs";
+import { TfiWrite } from "react-icons/tfi";
 
 function AdminDash() {
   const [show, setShow] = useState(false)
   const [showLeave, setShowLeave] = useState(false)
-  const [divColor, setDivColor] = useState('home')
+  const [divColor, setDivColor] = useState('home') 
   const { showEmailBox,setShowEmailBox } = useContext(EmployeeContext)
   const [showMail, setShowMail] = useState(false)
 
@@ -36,9 +40,15 @@ function AdminDash() {
   }
   function handleProject() {
     setDivColor("project")
+    setShow(false)
+    setShowLeave(false)
+
   }
   function handleTeam() {
     setDivColor("team")
+    setShow(false)
+    setShowLeave(false)
+
   }
   function handleDivChange(val) {
     setDivColor(val)
@@ -46,6 +56,10 @@ function AdminDash() {
   function handleInbox() {
     setDivColor('email')
     setShowMail(!showMail)
+    setShow(false)
+    setShowLeave(false)
+
+
   }
   return (
     <div className='das_containner'>
@@ -119,7 +133,15 @@ function AdminDash() {
               </div>
               <div className={`das_con_sidebar_1 ${divColor == "team" ? "true" : ""}`} onClick={handleTeam} >
                 <Link className='tdash_link' style={{ textDecoration: 'none' }} to="/admin/team" >
-                  <p><RiProjectorLine /> TEAM LEADERS</p></Link>
+                  <p><BsPeople /> TEAM LEADERS</p></Link>
+              </div>
+              <div className={`das_con_sidebar_1 ${divColor == "employees" ? "true" : ""}`} onClick={() => handleDivChange('employees')}>
+                <Link className='tdash_link' style={{ textDecoration: 'none' }} to="/admin/employees-details" >
+                  <p><BsPeople /> EMPLOYEES</p></Link>
+              </div>
+              <div className={`das_con_sidebar_1 ${divColor == "director" ? "true" : ""}`} onClick={() => handleDivChange('director')} >
+                <Link className='tdash_link' style={{ textDecoration: 'none' }} to="/admin/director-details" >
+                  <p><BsPeople /> DIRECTOR</p></Link>
               </div>
               <div className={`das_con_sidebar_1 ${divColor == "email" ? "true" : ""}`} onClick={handleInbox}  >
                 <p><AiOutlineMail /> EMAIL</p>
@@ -128,12 +150,11 @@ function AdminDash() {
                 <>
                   <div className={`das_con_sidebar_1 ${divColor == "inbox" ? "true" : ""}`} onClick={() => handleDivChange('inbox')}>
                     <Link className='tdash_link' style={{ textDecoration: 'none' }} to="/admin/inbox" >
-                      <p> INBOX</p></Link>
-                  </div>
+                    <p> <BsInbox/> INBOX</p></Link>
+                    </div>
                   <div className={`das_con_sidebar_1 ${divColor == "compose" ? "true" : ""}`} onClick={() => handleDivChange('compose')}>
                     <Link className='tdash_link' style={{ textDecoration: 'none' }} to="/admin/compose" >
-                      <p> Compose</p></Link>
-
+                    <p><TfiWrite/> Compose</p></Link>
                   </div>
                 </>
               ) : null}

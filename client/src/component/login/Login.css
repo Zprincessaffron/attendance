@@ -177,7 +177,8 @@ form.sign-in-form {
 
 
 .login_btn {
-  padding: 12px 27px;
+  width: 85px;
+  height: 38px;
   letter-spacing: 0.5px;
   background-color: #5995fd;
   border: none;
@@ -185,9 +186,12 @@ form.sign-in-form {
   border-radius: 49px;
   color: #fff;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 400;
   margin: 10px 0;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   transition: 0.5s;
 }
 

@@ -72,7 +72,7 @@ function EmployeeDash() {
 
 <nav>
  <div className='das_con_sidebar_main'>
-  <div className='das_con_sidebar_title'>
+  <div className='das_con_sidebar_title'> 
     <div>EMPLOYEE DASHBOARD</div>
 
   </div>

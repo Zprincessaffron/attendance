@@ -4,8 +4,9 @@ import axios from 'axios';
 import moment from 'moment';
 import { IoMdSearch } from "react-icons/io";
 import ShiningText from '../text/ShiningText';
-
+import * as XLSX from 'xlsx';
 import '../../styles/teamlead/TEmployeeAttendance.css'
+import excelpng from '../../images/excelpng.png'
 function AEmployeeAttendance() {
   const { teamMembers,allEmployeesData, particularEmployeeAttendance,setParticularEmployeeAttendance,AttendanceData,employeeData }=useContext(EmployeeContext)
   const [popup,setPopup]=useState(false)
@@ -20,7 +21,7 @@ function AEmployeeAttendance() {
         
       const response = await axios.get(`/attendance/${selectedId}`);
       setAllParticularEmployeeAttendance(response.data)
-      console.log(allParticularEmployeeAttendance)
+      console.log("allParticularEmployeeAttendance",allParticularEmployeeAttendance)
 
  
       
@@ -34,6 +35,46 @@ function AEmployeeAttendance() {
 
 
 
+
+
+const handleAttendanceDownload = (data) => {
+  // Group attendance data by month
+  const monthlyData = {};
+
+  data.forEach((record) => {
+    const checkInDate = new Date(record.checkInTime);
+    const monthYear = `${checkInDate.getFullYear()}-${checkInDate.getMonth() + 1}`;
+
+    if (!monthlyData[monthYear]) {
+      monthlyData[monthYear] = { daysWorked: new Set(), totalHours: 0 };
+    }
+
+    // Track unique days worked and accumulate total hours directly from totalHoursWorked field
+    monthlyData[monthYear].daysWorked.add(checkInDate.toDateString());
+    monthlyData[monthYear].totalHours += record.totalHoursWorked || 0;
+  });
+
+  // Convert to rows for Excel
+  const rows = [
+    ["Month-Year", "Days Worked", "Total Hours"]
+  ];
+
+  for (const [monthYear, data] of Object.entries(monthlyData)) {
+    rows.push([
+      monthYear,
+      data.daysWorked.size,
+      data.totalHours.toFixed(2)  // Format total hours to 2 decimal places if needed
+    ]);
+  }
+
+  // Create worksheet and workbook
+  const worksheet = XLSX.utils.aoa_to_sheet(rows);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Attendance");
+
+  // Generate and download Excel file
+  XLSX.writeFile(workbook, `attendance_report.xlsx`);
+};
 
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10; // Number of rows to display per page
@@ -101,6 +142,9 @@ const handleSelect = (id) => {
       <div className='outlet_title'>
         <div>
         <ShiningText  text="employee attendance"/>
+        </div>
+        <div>
+          <button className='download_data_btn' onClick={()=>{handleAttendanceDownload(allParticularEmployeeAttendance)}}>download <img src={excelpng} alt="" /></button>
         </div>
         <div className="dropdown">
             <div className="dropdown-header" onClick={toggleDropdown}>

@@ -51,6 +51,8 @@ import ATeam from './component/admin/ATeam';
 import NewEmployee from './component/admin/NewEmployee';
 import ForgotPassword from './component/login/ForgotPassword';
 import OtpVerify from './component/login/OtpVerify';
+import ADirectorDetails from './component/admin/ADirectorDetails';
+import AEmployeesDetails from './component/admin/AEmployeesDetails';
 function App() {
   return (
     <>
@@ -80,6 +82,9 @@ function App() {
           <Route path="inbox" element={<Inbox />} />
           <Route path="email-detail" element={<EmailDetail />} />
           <Route path="compose" element={<Compose />} />
+          <Route path="director-details" element={<ADirectorDetails />} />
+          <Route path="employees-details" element={<AEmployeesDetails />} />
+
           </Route>
           
         </Route>

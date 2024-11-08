@@ -83,3 +83,31 @@ z-index: -2;
     gap: 2rem;
     align-items: center;
 }
+.download_data_btn{
+    padding: 8px 22px;
+    border-radius: 25px;
+    border: none;
+    background-color: rgb(97, 130, 180);
+    color: rgb(255, 255, 255);
+    letter-spacing: 0.5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    gap: 5px;
+
+}
+.download_data_btn>img{
+    width: 15px;
+    height: auto;
+}
+.download_data_btn:hover{
+    scale: 101%;
+    background-color: rgb(49, 118, 213);
+
+}
+.download_data_btn:active{
+    scale: 98%;
+    background-color: rgb(49, 118, 213);
+
+}
